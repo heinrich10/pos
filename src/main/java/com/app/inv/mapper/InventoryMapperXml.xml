@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.inv.mapper.InventoryMapper">
+	<select id="loadInventory" resultMap="loadInventoryResultMap">
+		SELECT
+		III.item_number,
+		CONCAT(IIC.brand, " ", IIC.name) as name,
+		III.code_ingredient,
+		III.quantity,
+		III.unit_price,
+		CU.name,
+		III.code_unit,
+		III.stock_date
+		FROM
+
+		im_ingredient_inventory III
+		JOIN
+		im_ingredient_code IIC
+		ON
+		III.code_ingredient = IIC.code
+
+		JOIN
+		core_units CU
+		ON
+		III.code_unit = CU.code_unit
+
+
+	</select>
+
+	<resultMap id="loadInventoryResultMap" type="com.app.inv.model.Inventory">
+		<constructor>
+			<idArg column="item_number" javaType="_long" />
+			<idArg column="name" javaType="String" />
+			<idArg column="code_ingredient" javaType="String" />
+			<idArg column="quantity" javaType="_int" />
+			<idArg column="unit_price" javaType="_double" />
+			<idArg column="CU.name" javaType="String" />
+			<idArg column="code_unit" javaType="String" />
+			<idArg column="unit_price" javaType="_double" />
+			<idArg column="stock_date" javaType="java.sql.Date" />
+		</constructor>
+	</resultMap>
+	
+	<select id = "loadInventoryPending" resultMap="loadInventoryPendingResultMap">
+        SELECT 
+        IIP.item_number,
+        CONCAT(IIC.brand, " ", IIC.name) as name,
+        IIP.code_ingredient,
+        IIP.quantity,
+        IIP.unit_price,
+        CU.name,
+        IIP.code_unit,
+        IIP.total_price,
+        IIP.order_date 
+        FROM 
+        im_ingredient_pending IIP 
+        JOIN
+        im_ingredient_code IIC 
+        ON IIP.code_ingredient = IIC.code 
+      
+        JOIN core_units CU 
+        ON 
+        IIP.code_unit = CU.code_unit
+      
+    </select>
+    
+    <resultMap id = "loadInventoryPendingResultMap" type = "com.app.inv.model.Inventory">
+        <constructor>
+        
+            <idArg column="item_number" javaType="_long"/>
+            <idArg column="name" javaType="String"/>
+            <idArg column="code_ingredient" javaType="String"/>
+            <idArg column="quantity" javaType="_int"/>
+            <idArg column="unit_price" javaType="_double"/>
+            <idArg column="CU.name" javaType="String"/>
+            <idArg column="code_unit" javaType="String" />
+            <idArg column="total_price" javaType="_double" />
+            <idArg column="order_date" javaType="java.sql.Date"/>
+        </constructor>
+    </resultMap>
+</mapper>
