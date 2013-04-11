@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,39 +21,40 @@ import com.app.inv.model.Inventory;
 @Controller
 @RequestMapping("/inventory")
 public class InventoryController {
-
-	private InventoryMapper inventoryMapper = null;
-
-	@Autowired
-	public void setInventoryMapper(InventoryMapper inventoryMapper) {
-		this.inventoryMapper = inventoryMapper;
-	}
+	
+	@Inject
+	private InventoryMapper inventoryMapper;
 
 	@RequestMapping(value = "/active", method = RequestMethod.GET)
-	public ModelAndView getInventory(Model model) {
+	public ModelAndView getInventory() {
 
-		ArrayList<Inventory> arrInventory = null;
+		ArrayList<Inventory> arrInventory;
 
 		arrInventory = inventoryMapper.loadInventory();
 		Map<String, Object> myModel = new HashMap<String, Object>();
 		myModel.put("inventory", arrInventory);
-		// model.addAttribute(arrInventory);
+		myModel.put("tabletype", "active");
 
 		return new ModelAndView("inventory", "model", myModel);
 
 	}
 
 	@RequestMapping(value = "/pending", method = RequestMethod.GET)
-	@ResponseBody
-	public ArrayList<Inventory> getInventoryPending(Locale locale, Model model) {
+	public ModelAndView getInventoryPending() {
 
-		ArrayList<Inventory> arrInventory = null;
+		ArrayList<Inventory> arrInventory;
 
 		arrInventory = inventoryMapper.loadInventoryPending();
 		Map<String, Object> myModel = new HashMap<String, Object>();
 		myModel.put("inventory", arrInventory);
-		// model.addAttribute(arrInventory);
-		return arrInventory;
+		myModel.put("tabletype", "pending");
 
+		return new ModelAndView("inventory", "model", myModel);
+
+	}
+	
+	@RequestMapping(value = "/pending/add", method = RequestMethod.GET)
+	public String addInventoryPending(){
+		return "inventoryPendingAdd";
 	}
 }

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.inv.mapper.IngredientMapper">
+   <select id = "loadIngredientCode" resultMap="loadIngredientCodeResultMap">
+        SELECT  
+        IIC.code,
+        IIC.brand, 
+        IIC.name,
+        IIC.type, 
+        IIT.name 
+        FROM 
+        im_ingredient_code IIC 
+        JOIN 
+        im_ingredient_type IIT
+        ON IIC.type = IIT.code 
+        order by 
+        IIC.code
+    </select>
+    
+    <resultMap id = "loadIngredientCodeResultMap" type = "com.app.inv.model.IngredientCode">
+        <constructor>
+            <idArg column="code" javaType="String"/>
+            <idArg column="brand" javaType="String"/>
+            <idArg column="name" javaType="String"/>
+            <idArg column="type" javaType="String"/>
+            <idArg column="IIT.name" javaType="String"/>
+        </constructor>
+    </resultMap>
+    
+    <select id = "loadIngredientType" resultMap="loadIngredientTypeResultMap">
+        SELECT
+        code, 
+        name 
+        FROM 
+        im_ingredient_type
+    </select>
+    
+    <resultMap id = "loadIngredientTypeResultMap" type = "com.app.inv.model.IngredientCode">
+        <constructor>
+            <idArg column="code" javaType="String"/>
+            <idArg column="name" javaType="String"/>
+        </constructor>
+    </resultMap>
+    
+    
+    <select id = "loadIngredientLinkOne" parameterType="String" resultMap="loadIngredientLinkResultMap">
+        SELECT 
+        III.item_number, 
+        CONCAT(IIC.brand, " ", IIC.name) as name, 
+        III.code_ingredient, 
+        III.quantity, 
+        III.unit_price, 
+        CU.name, 
+        III.code_unit, 
+        III.stock_date 
+        FROM 
+        core_inventory_ingredient CII 
+        JOIN 
+        (im_ingredient_inventory III 
+        JOIN 
+        im_ingredient_code IIC 
+        ON 
+        III.code_ingredient = IIC.code 
+        JOIN 
+        core_units CU 
+        ON 
+        III.code_unit = CU.code_unit) 
+        ON 
+        CII.item_number = III.item_number
+        
+        where CII.code_ingredient = #{codeIngredient}
+    </select>
+    
+    <select id = "loadIngredientLinkTwo" parameterType="String" resultMap="loadIngredientLinkResultMap">
+        SELECT 
+        III.item_number, 
+        CONCAT(IIC.brand, " ", IIC.name) as name, 
+        III.code_ingredient, 
+        III.quantity, 
+        III.unit_price, 
+        CU.name, 
+        III.code_unit, 
+        III.stock_date 
+        FROM 
+        core_inventory_ingredient CII 
+        JOIN 
+        (im_ingredient_inventory III 
+        JOIN 
+        im_ingredient_code IIC 
+        ON 
+        III.code_ingredient = IIC.code 
+        JOIN 
+        core_units CU 
+        ON 
+        III.code_unit = CU.code_unit) 
+        ON 
+        CII.item_number2 = III.item_number
+        
+        where CII.code_ingredient = #{codeIngredient}
+    </select>
+    
+    <resultMap id = "loadIngredientLinkResultMap" type = "com.app.inv.model.Inventory">
+        <constructor>
+            <idArg column="item_number" javaType="_long"/>
+            <idArg column="name" javaType="String"/>
+            <idArg column="code_ingredient" javaType="String"/>
+            <idArg column="quantity" javaType="_int"/>
+            <idArg column="unit_price" javaType="_double"/>
+            <idArg column="CU.name" javaType="String"/>
+            <idArg column="code_unit" javaType="String" />
+            <idArg column="unit_price" javaType="_double" />
+            <idArg column="stock_date" javaType="java.sql.Date"/>
+        </constructor>
+    </resultMap>
+    
+    <insert id = "saveIngredientCode" parameterType="com.app.inv.model.IngredientCode">
+        insert into 
+        im_ingredient_code(
+        create_date, 
+        update_date, 
+        update_user, 
+        update_program, 
+        code, 
+        brand, 
+        name,
+        type) 
+        values (
+        sysdate(),
+        sysdate(), 
+        "pgm",
+        "ICService", 
+        #{code}, 
+        #{brand}, 
+        #{name}, 
+        #{typeCode})
+    </insert>
+    
+    <delete id="deleteIngredientCode" parameterType="String">
+        delete
+        from 
+        im_ingredient_code 
+        where 
+        code = #{code}
+    </delete>
+    
+    <insert id="saveInventoryLink" parameterType="hashmap">
+        insert into 
+        core_inventory_ingredient(
+        create_date, 
+        update_date, 
+        update_user, 
+        update_program, 
+        code_ingredient, 
+        item_number, 
+        item_number2) 
+        values (
+        sysdate(),
+        sysdate(), 
+        "pgm", 
+        "ICService",
+        #{1},
+        #{2},
+        #{3})
+        on duplicate key update 
+        update_date = sysdate(), 
+        item_number = #{2}, 
+        item_number2 = #{3}
+    </insert>
+</mapper>
+

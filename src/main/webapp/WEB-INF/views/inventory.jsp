@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <%@ page session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -11,7 +11,7 @@
 
 <style type="text/css">
 <%@
-include file = "/WEB-INF/views/design.css" 
+include file = "/WEB-INF/resources/design.css" 
 %>
 </style>
 <title>Active Inventory</title>
@@ -44,57 +44,62 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-	<div id="container">
-		<div id="header">
-			<h1>Inventory</h1>
-		</div>
-		<div id="navigation">
-			<ul>
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Inventory</a></li>
-				<li><a href="#">Maintenance</a></li>
-				<li><a href="#">Accounting</a></li>
-			</ul>
-		</div>
-		<div id="content-container">
-			<div id="left">
-				<h3>Options</h3>
-				<a href="pending"> View Orders </a>
-				<button> test </button>
-			</div>
+<header>
+	<h1>Inventory</h1>
+</header>
 
-			<div id="content">
-				<a href="url">Refresh</a>
-				<h2>Inventory</h2>
-				<table id="inventory" border="1">
-					<tr>
-						<th>Item Number</th>
-						<th>Name</th>
-						<th>Quantity</th>
-						<th>Unit</th>
-						<th>Stock Date</th>
-						<th>Roast Date</th>
-						<th>Exp Date</th>
-						<th>Comments</th>
-					</tr>
-					<c:forEach items="${model.inventory}" var="prod">
-						<tr>
-							<td><c:out value="${prod.itemNumber}" /></td>
-							<td><c:out value="${prod.name}" /></td>
-							<td><c:out value="${prod.quantity}" /></td>
-							<td><c:out value="${prod.unit}" /></td>
-							<td><c:out value="${prod.date}" /></td>
-							<td><c:out value="${prod.roastDate}" /></td>
-							<td><c:out value="${prod.expDate}" /></td>
-							<td><c:out value="${prod.comment}" /></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</div>
-		</div>
-		<div id="footer">
-			Copyright © Site name, 20XX
-		</div>
-	</div>
+<%@ include file="/WEB-INF/resources/navbar.jsp" %>
+
+<article>
+	<c:choose>
+		<c:when test = "${model.tabletype == 'active'}">
+			<a href="url">Refresh</a>
+			<h2>Inventory</h2>
+		</c:when>
+		
+		<c:when test = "${model.tabletype == 'pending'}">
+			<a href="url">Refresh</a>
+			<a href="url">Delete</a>
+			<a href="url">Edit</a>
+			<a href=<c:url value="pending/add"></c:url>>Add</a>
+			<h2>Orders</h2>
+		</c:when>
+		
+	</c:choose>
+	
+	
+	<br>
+	<table id="inventory" border="1">
+		<tr>
+			<th>Item Number</th>
+			<th>Name</th>
+			<th>Quantity</th>
+			<th>Unit</th>
+			<th>Stock Date</th>
+			<th>Roast Date</th>
+			<th>Exp Date</th>
+			<th>Comments</th>
+		</tr>
+		<c:forEach items="${model.inventory}" var="prod">
+			<tr>
+				<td><c:out value="${prod.itemNumber}" /></td>
+				<td><c:out value="${prod.name}" /></td>
+				<td><c:out value="${prod.quantity}" /></td>
+				<td><c:out value="${prod.unit}" /></td>
+				<td><c:out value="${prod.date}" /></td>
+				<td><c:out value="${prod.roastDate}" /></td>
+				<td><c:out value="${prod.expDate}" /></td>
+				<td><c:out value="${prod.comment}" /></td>
+			</tr>
+		</c:forEach>
+	</table>
+</article>
+
+<aside>
+	<h3>Options</h3>
+	<a href="pending"> View Orders </a>
+</aside>
+			
+<%@ include file="/WEB-INF/resources/footer.html" %>
 </body>
 </html>

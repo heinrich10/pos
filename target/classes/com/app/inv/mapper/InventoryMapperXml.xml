@@ -81,4 +81,118 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <idArg column="order_date" javaType="java.sql.Date"/>
         </constructor>
     </resultMap>
+    
+    <insert id = "saveInventoryPending" parameterType="com.app.inv.model.Inventory">
+        insert into 
+        im_ingredient_pending(
+        create_date, 
+        update_date, 
+        update_user, 
+        update_program, 
+        code_ingredient, 
+        quantity, 
+        unit_price, 
+        code_unit, 
+        total_price, 
+        order_date) 
+        values (
+        sysdate(), 
+        sysdate(), 
+        "pgm", 
+        "IPService", 
+        #{codeIngredient}, 
+        #{quantity}, 
+        #{unitPrice}, 
+        #{unitCode},
+        #{totalPrice}, 
+        #{date})
+    </insert>
+    
+    <delete id="deleteInventoryPending" parameterType="_long">
+        delete from 
+        im_ingredient_pending 
+        where 
+        item_number = #{index}
+    </delete>
+    
+    <insert id="saveToInventory" parameterType="com.app.inv.model.Inventory">
+        insert into 
+        im_ingredient_inventory(
+        create_date, 
+        update_date, 
+        update_user, 
+        update_program, 
+        code_ingredient, 
+        quantity, 
+        total_price, 
+        code_unit, 
+        unit_price, 
+        stock_date, 
+        roast_date,
+        exp_date,
+        remarks) 
+        values (
+        sysdate(), 
+        sysdate(), 
+        "pgm", 
+        "IPService", 
+        #{codeIngredient}, 
+        #{quantity},
+        #{totalPrice},
+        #{unitCode}, 
+        #{unitPrice}, 
+        sysdate(), 
+        #{roastDate},
+        #{expDate},
+        #{comment})
+    </insert>
+    
+    <insert id="addPendingHist" parameterType="com.app.inv.model.Inventory">
+        
+        insert into 
+        im_ingredient_pending_hist(
+        create_date,
+        update_date,
+        update_user, 
+        update_program,
+        code_ingredient,
+        quantity,
+        unit_price, 
+        code_unit, 
+        total_price, 
+        order_date, 
+        delivery_date) 
+        values (
+        sysdate(),
+        sysdate(), 
+        "pgm", 
+        "IPService", 
+        #{codeIngredient}, 
+        #{quantity}, 
+        #{unitPrice}, 
+        #{unitCode}, 
+        #{totalPrice}, 
+        #{date},
+        sysdate())
+    </insert>
+    
+    <delete id="deleteInventory" parameterType="_long">
+        delete from 
+        im_ingredient_inventory 
+        where 
+        item_number = #{index}
+    </delete>
+    
+    <update id="updateInventory" parameterType="map">
+        update 
+        im_ingredient_inventory
+        SET 
+        update_date = sysdate(), 
+        update_user = "pgm", 
+        update_program = "IPService", 
+        quantity = #{param2} 
+        where 
+        item_number = #{param1}
+        
+    </update>  
 </mapper>

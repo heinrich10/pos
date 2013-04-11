@@ -1,0 +1,195 @@
+body {
+	margin: 0 auto;
+	width: 1024px;
+	background: #fff;
+}
+
+header {
+	background: #ccc;
+	padding: 20px;
+}
+
+header h1 {
+	text-align: center; 
+}
+
+nav {
+	float: left;
+	width: 100%;
+	background: #333;
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
+}
+
+nav ul li {
+	list-style-type: none;
+	display: inline;
+}
+
+nav ul a { 
+   border-bottom: thin; border-bottom-style: solid; border-bottom-color: transparent;
+}
+
+nav li a {
+	display: block;
+	float: left;
+	padding: 5px 10px;
+	color: #fff;
+	text-decoration: none;
+	border-right: 1px solid #fff;
+	
+}
+
+nav li a:hover {
+	background: #383;
+}
+
+#content-container {
+	float: left;
+	width: 1024px;
+	background: #fff;
+	min-height: 600px
+}
+
+article {
+	
+	float: right;
+ 	width: 77%;
+	padding: 20px 10px;
+	margin: 0 0 0 0px;
+	display: inline;
+}
+
+article a {
+	text-align: right;
+	float: right;
+}
+
+article h2 {
+	margin: 0;
+}
+
+article h6 {
+	float:right;
+	text-align: right;
+}
+
+aside {
+	clear: left;
+	float: left;
+	width: 17%;
+	padding: 10px 10px;
+	margin: 0 0 0 0;
+	display: block;
+	min-height: 600px;
+	border-right: 1px solid #333;
+}
+
+#left h3 {
+	margin: 0;
+}
+
+footer {
+	clear: both;
+	background: #ccc;
+	text-align: right;
+	padding: 20px;
+	height: 1%;
+	
+}
+
+#inventory {
+	
+}
+
+/* Drop-Down Navigation */
+
+ul#navigation li:hover > ul
+{
+
+/*these 2 styles are very important, 
+
+being the ones which make the drop-down to appear on hover */
+
+    visibility:visible;
+
+    opacity:1;
+
+}
+
+ 
+
+ul#navigation ul, ul#navigation ul li ul {
+
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;    
+
+/*the next 2 styles are very important, 
+
+being the ones which make the drop-down to stay hidden */
+
+    visibility:hidden;
+
+    opacity:0;
+
+    position: absolute;
+
+    z-index: 99999;
+
+    width:180px;
+
+    background:#f8f8f8;
+
+    box-shadow:1px 1px 3px #ccc;
+
+/* css3 transitions for smooth hover effect */
+
+    -webkit-transition:opacity 0.2s linear, visibility 0.2s linear; 
+
+    -moz-transition:opacity 0.2s linear, visibility 0.2s linear; 
+
+    -o-transition:opacity 0.2s linear, visibility 0.2s linear; 
+
+    transition:opacity 0.2s linear, visibility 0.2s linear;     
+
+}
+
+ 
+
+ul#navigation ul {
+
+    top: 43px;
+
+    left: 1px;
+
+}
+
+ 
+
+ul#navigation ul li ul {
+
+    top: 0;
+
+    left: 181px; /* strong related to width:180px; from above */
+
+}
+
+ 
+
+ul#navigation ul li {
+
+    clear:both;
+
+    width:100%;
+
+    border:0 none;
+
+    border-bottom:1px solid #c9c9c9;
+
+}

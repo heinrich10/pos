@@ -37,28 +37,6 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	
-	
-	<!-- util:map id="dbProps">
-   		<entry key="db.driver" value="com.mysql.jdbc.Driver"/>
-    	<entry key="db.jdbcurl" value="jdbc:mysql://192.168.159.10:3306/MO"/>
-    	<entry key="db.username" value="ricknb"/>
-    	<entry key="db.password" value="asdf1234"/>
-	</util:map>
-	
-	<bean id="dataSource"
-       class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    	<property name="driverClassName" value="${db.driver}"/>
-    	<property name="url" value="${db.jdbcurl}"/>
-    	<property name="username" value="${db.username}"/>
-    	<property name="password" value="${db.password}"/>
-	</bean>
-	
-	<bean
- 	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	    <property name="properties" ref="dbProps"/>
-	</bean-->
-	
 	<bean id="dataSource"
        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
        	<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -71,7 +49,6 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="mapperLocations" value="classpath*:com/app/inv/mapper/*.xml"/>
-        <!-- property name="configLocation" value="WEB-INF/mybatis-config.xml"/-->
     </bean>
 	
 	<!-- bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -83,6 +60,13 @@
 		<property name="mapperInterface" value="com.app.inv.mapper.InventoryMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
+	
+	<bean id="ingredientMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.app.inv.mapper.IngredientMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	
+	
 	
 	<!-- bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory"/>
