@@ -4,16 +4,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.app.inv.mapper.InventoryMapper">
-	<select id="loadInventory" resultMap="loadInventoryResultMap">
+	<select id="loadInventoryActive" resultType = "com.app.inv.model.InventoryActive">
 		SELECT
-		III.item_number,
+		III.item_number as itemNumber,
 		CONCAT(IIC.brand, " ", IIC.name) as name,
-		III.code_ingredient,
-		III.quantity,
-		III.unit_price,
-		CU.name,
-		III.code_unit,
-		III.stock_date
+		III.code_ingredient as codeIngredient,
+		III.quantity as quantity,
+		III.unit_price as unitPrice,
+		CU.name as unit,
+		III.code_unit as unitCode,
+		III.stock_date as stockDate,
+		III.roast_date as roastDate,
+		III.exp_date as expDate,
+		III.remarks as comment
 		FROM
 
 		im_ingredient_inventory III
@@ -29,32 +32,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	</select>
-
-	<resultMap id="loadInventoryResultMap" type="com.app.inv.model.Inventory">
-		<constructor>
-			<idArg column="item_number" javaType="_long" />
-			<idArg column="name" javaType="String" />
-			<idArg column="code_ingredient" javaType="String" />
-			<idArg column="quantity" javaType="_int" />
-			<idArg column="unit_price" javaType="_double" />
-			<idArg column="CU.name" javaType="String" />
-			<idArg column="code_unit" javaType="String" />
-			<idArg column="unit_price" javaType="_double" />
-			<idArg column="stock_date" javaType="java.sql.Date" />
-		</constructor>
-	</resultMap>
 	
-	<select id = "loadInventoryPending" resultMap="loadInventoryPendingResultMap">
+	<select id = "loadInventoryPending" resultType="com.app.inv.model.InventoryPending">
         SELECT 
-        IIP.item_number,
+        IIP.item_number as itemNumber,
         CONCAT(IIC.brand, " ", IIC.name) as name,
-        IIP.code_ingredient,
+        IIP.code_ingredient as codeIngredient,
         IIP.quantity,
-        IIP.unit_price,
-        CU.name,
-        IIP.code_unit,
-        IIP.total_price,
-        IIP.order_date 
+        IIP.unit_price as unitPrice,
+        CU.name as unit,
+        IIP.code_unit as unitCode,
+        IIP.total_price as totalPrice,
+        IIP.order_date as orderDate 
         FROM 
         im_ingredient_pending IIP 
         JOIN
@@ -66,21 +55,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         IIP.code_unit = CU.code_unit
       
     </select>
-    
-    <resultMap id = "loadInventoryPendingResultMap" type = "com.app.inv.model.Inventory">
-        <constructor>
-        
-            <idArg column="item_number" javaType="_long"/>
-            <idArg column="name" javaType="String"/>
-            <idArg column="code_ingredient" javaType="String"/>
-            <idArg column="quantity" javaType="_int"/>
-            <idArg column="unit_price" javaType="_double"/>
-            <idArg column="CU.name" javaType="String"/>
-            <idArg column="code_unit" javaType="String" />
-            <idArg column="total_price" javaType="_double" />
-            <idArg column="order_date" javaType="java.sql.Date"/>
-        </constructor>
-    </resultMap>
     
     <insert id = "saveInventoryPending" parameterType="com.app.inv.model.Inventory">
         insert into 
@@ -105,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{unitPrice}, 
         #{unitCode},
         #{totalPrice}, 
-        #{date})
+        sysdate())
     </insert>
     
     <delete id="deleteInventoryPending" parameterType="_long">

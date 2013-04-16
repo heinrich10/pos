@@ -3,14 +3,16 @@ package com.app.inv.mapper;
 import java.util.ArrayList;
 
 import com.app.inv.model.Inventory;
+import com.app.inv.model.InventoryActive;
+import com.app.inv.model.InventoryPending;
 
 public interface InventoryMapper {
 	 
-	ArrayList<Inventory> loadInventory(String codeIngredient);
+	ArrayList<InventoryActive> loadInventoryActive(String codeIngredient);
 	    
-	ArrayList<Inventory> loadInventory();
+	ArrayList<InventoryActive> loadInventoryActive();
 	  
-	ArrayList<Inventory> loadInventoryPending();
+	ArrayList<InventoryPending> loadInventoryPending();
 	    
 	void saveInventoryPending(Inventory inventory);
 	    
@@ -20,7 +22,7 @@ public interface InventoryMapper {
 	    
 	void saveToInventory(Inventory inventory);
 	    
-	void addPendingHist(Inventory inventory);
+	void addPendingHist(InventoryPending inventoryPending);
 	    
 	void updateInventory(long itemNumber, int quantity);
 }

@@ -34,4 +34,8 @@ public class IngredientCode {
     public String getType(){
         return type;
     }
+    
+    public String getFullName(){
+    	return brand + " " + name;
+    }
 }

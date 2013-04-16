@@ -1,12 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<%@ page session="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Add Order</title>
 </head>
 <body>
-This is add inventory pending
+<sf:form method="post" commandName="inventory" >
+<table>
+	<tr>
+        <td>Name:</td>
+        <td>
+        	<sf:select path="codeIngredient" >
+        		<sf:options items="${ingredientCode}" itemLabel="fullName" itemValue="code"/>
+        	</sf:select>
+        </td>
+    </tr>
+    <tr>
+        <td>Quantity:</td>
+        <td><sf:input path="quantity" /></td>
+    </tr>
+    <tr>
+        <td>Unit:</td>
+        <td>
+        	<sf:select path="unitCode" >
+        		<sf:options items="${unit}" itemLabel="name" itemValue="codeUnit"/>
+        	</sf:select>
+        </td>
+    </tr>
+    <tr>
+        <td>Unit Price:</td>
+        <td><sf:input path="unitPrice" /></td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <input type="submit" value="Accept" />
+        </td>
+    </tr>
+</table>
+</sf:form>
 </body>
 </html>

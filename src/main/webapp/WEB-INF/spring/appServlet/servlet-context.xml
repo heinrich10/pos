@@ -66,6 +66,14 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
+	<bean id="unitMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.app.inv.mapper.UnitMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	
+	<bean id="inventoryValidator" class="com.app.inv.validator.InventoryValidator">
+	</bean>
+	
 	
 	
 	<!-- bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">

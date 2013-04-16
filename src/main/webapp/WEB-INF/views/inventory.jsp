@@ -50,55 +50,82 @@ $(document).ready(function(){
 
 <%@ include file="/WEB-INF/resources/navbar.jsp" %>
 
-<article>
-	<c:choose>
-		<c:when test = "${model.tabletype == 'active'}">
+<c:choose>
+	<c:when test = "${model.tabletype == 'active'}">
+		<article>
 			<a href="url">Refresh</a>
 			<h2>Inventory</h2>
-		</c:when>
+			<table id="inventory" border="1">
+				<tr>
+					<th>Item Number</th>
+					<th>Name</th>
+					<th>Quantity</th>
+					<th>Unit</th>
+					<th>Stock Date</th>
+					<th>Roast Date</th>
+					<th>Exp Date</th>
+					<th>Comments</th>
+				</tr>
+				<c:forEach items="${model.inventory}" var="prod">
+					<tr>
+						<td><c:out value="${prod.itemNumber}" /></td>
+						<td><c:out value="${prod.name}" /></td>
+						<td><c:out value="${prod.quantity}" /></td>
+						<td><c:out value="${prod.unit}" /></td>
+						<td><c:out value="${prod.stockDate}" /></td>
+						<td><c:out value="${prod.roastDate}" /></td>
+						<td><c:out value="${prod.expDate}" /></td>
+						<td><c:out value="${prod.comment}" /></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</article>
+		<aside>
+			<h3>Options</h3>
+			<a href="pending"> View Orders </a>
+		</aside>				
+	</c:when>
 		
-		<c:when test = "${model.tabletype == 'pending'}">
+	<c:when test = "${model.tabletype == 'pending'}">
+		<article>
 			<a href="url">Refresh</a>
-			<a href="url">Delete</a>
-			<a href="url">Edit</a>
-			<a href=<c:url value="pending/add"></c:url>>Add</a>
 			<h2>Orders</h2>
-		</c:when>
-		
-	</c:choose>
-	
-	
-	<br>
-	<table id="inventory" border="1">
-		<tr>
-			<th>Item Number</th>
-			<th>Name</th>
-			<th>Quantity</th>
-			<th>Unit</th>
-			<th>Stock Date</th>
-			<th>Roast Date</th>
-			<th>Exp Date</th>
-			<th>Comments</th>
-		</tr>
-		<c:forEach items="${model.inventory}" var="prod">
-			<tr>
-				<td><c:out value="${prod.itemNumber}" /></td>
-				<td><c:out value="${prod.name}" /></td>
-				<td><c:out value="${prod.quantity}" /></td>
-				<td><c:out value="${prod.unit}" /></td>
-				<td><c:out value="${prod.date}" /></td>
-				<td><c:out value="${prod.roastDate}" /></td>
-				<td><c:out value="${prod.expDate}" /></td>
-				<td><c:out value="${prod.comment}" /></td>
-			</tr>
-		</c:forEach>
-	</table>
-</article>
-
-<aside>
-	<h3>Options</h3>
-	<a href="pending"> View Orders </a>
-</aside>
+			<table id="inventory" border="1">
+				<tr>
+					<th>Item Number</th>
+					<th>Name</th>
+					<th>Quantity</th>
+					<th>Unit</th>
+					<th>Order Date</th>
+					
+					
+				</tr>
+				<c:forEach items="${model.inventory}" var="prod">
+					<tr>
+						<td><c:out value="${prod.itemNumber}" /></td>
+						<td><c:out value="${prod.name}" /></td>
+						<td><c:out value="${prod.quantity}" /></td>
+						<td><c:out value="${prod.unit}" /></td>
+						<td><c:out value="${prod.orderDate}" /></td>
+						<td><button type="submit">Edit</button></td>
+						<td>
+							<form id="delete" action="pending/delete" method="post">
+								<input id="itemNumber" name="itemNumber" type="hidden" value="${prod.itemNumber}"/>
+								<input type="submit" value="Delete" onClick="return confirm('Do you want to delete item number ${prod.itemNumber}?')"/>
+							</form>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</article>
+		<aside>
+			<h3>Options</h3>
+			<a href="pending/add">Add</a><br>
+			<a href="url">Delivered</a><br>
+			
+		</aside>
+	</c:when>
+</c:choose>
 			
 <%@ include file="/WEB-INF/resources/footer.html" %>
 </body>

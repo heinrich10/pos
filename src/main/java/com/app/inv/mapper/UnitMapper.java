@@ -1,5 +1,9 @@
 package com.app.inv.mapper;
 
-public interface UnitMapper {
+import java.util.ArrayList;
 
+import com.app.inv.model.Unit;
+
+public interface UnitMapper {
+	ArrayList<Unit> loadUnit();
 }
