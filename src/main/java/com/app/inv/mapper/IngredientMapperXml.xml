@@ -4,13 +4,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.app.inv.mapper.IngredientMapper">
-   <select id = "loadIngredientCode" resultMap="loadIngredientCodeResultMap">
+   <select id = "loadIngredientCode" resultType="com.app.inv.model.IngredientCode">
         SELECT  
         IIC.code,
         IIC.brand, 
         IIC.name,
-        IIC.type, 
-        IIT.name 
+        IIC.type as typeCode, 
+        IIT.name as type 
         FROM 
         im_ingredient_code IIC 
         JOIN 
@@ -20,31 +20,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         IIC.code
     </select>
     
-    <resultMap id = "loadIngredientCodeResultMap" type = "com.app.inv.model.IngredientCode">
-        <constructor>
-            <idArg column="code" javaType="String"/>
-            <idArg column="brand" javaType="String"/>
-            <idArg column="name" javaType="String"/>
-            <idArg column="type" javaType="String"/>
-            <idArg column="IIT.name" javaType="String"/>
-        </constructor>
-    </resultMap>
-    
-    <select id = "loadIngredientType" resultMap="loadIngredientTypeResultMap">
+    <select id = "loadIngredientType" resultType="com.app.inv.model.IngredientType">
         SELECT
         code, 
         name 
         FROM 
         im_ingredient_type
     </select>
-    
-    <resultMap id = "loadIngredientTypeResultMap" type = "com.app.inv.model.IngredientCode">
-        <constructor>
-            <idArg column="code" javaType="String"/>
-            <idArg column="name" javaType="String"/>
-        </constructor>
-    </resultMap>
-    
     
     <select id = "loadIngredientLinkOne" parameterType="String" resultMap="loadIngredientLinkResultMap">
         SELECT 

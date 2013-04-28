@@ -11,6 +11,25 @@ public class Inventory {
 	protected String unitCode;
 	protected double totalPrice;
     
+	public Inventory(){
+		
+	}
+	
+	public Inventory(Inventory inventory){
+		setInventory(inventory);
+	}
+	
+	public void setInventory(Inventory inventory){
+		this.itemNumber = inventory.itemNumber;
+		this.name = inventory.name;
+		this.codeIngredient = inventory.codeIngredient;
+		this.quantity = inventory.quantity;
+		this.unitPrice = inventory.unitPrice;
+		this.unit = inventory.unit;
+		this.unitCode = inventory.unitCode;
+		this.totalPrice = inventory.totalPrice;
+	}
+	
     public long getItemNumber(){
     	return itemNumber;
     }

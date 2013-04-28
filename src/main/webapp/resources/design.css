@@ -1,23 +1,53 @@
 body {
 	margin: 0 auto;
-	width: 1024px;
+	width:1024px;
 	background: #fff;
+
 }
 
 header {
-	background: #ccc;
-	padding: 20px;
+	padding: 15px 0px 15px 0px;
+	width: 100%;
+	position: relative;
+	top: 10px;
+	z-index: -1;
+	
 }
 
 header h1 {
 	text-align: center; 
+	color: #969696;
 }
 
-nav {
-	float: left;
-	width: 100%;
-	background: #333;
+#icon
+{
+  width: 200px;
+  height: 200px;
+  margin: 0px 0px 0px 38px;
+  padding: 1px ;
+  background: #8F857E;
+  float: left;
+  text-align: center;
+  vertical-align: middle;
+  
 }
+
+#nav1 {
+	float: right;
+	width: 782px;
+	height: 30px;
+	background: #FC8626;
+	
+}
+
+#nav2{
+	float: right;
+	width: 782px;
+	height:20px;
+	background: #A88568;
+	
+}
+
 
 nav ul {
 	margin: 0;
@@ -30,17 +60,26 @@ nav ul li {
 }
 
 nav ul a { 
-   border-bottom: thin; border-bottom-style: solid; border-bottom-color: transparent;
+   border-bottom: thin; 
+   border-bottom-style: solid; 
+   border-bottom-color: transparent;
 }
 
-nav li a {
+#nav1 li a {
 	display: block;
 	float: left;
 	padding: 5px 10px;
 	color: #fff;
 	text-decoration: none;
-	border-right: 1px solid #fff;
-	
+}
+
+#nav2 li a {
+	display: block;
+	float: left;
+	padding: 0px 10px;
+	color: #fff;
+	text-decoration: none;
+	font-size: 90%;
 }
 
 nav li a:hover {
@@ -57,10 +96,11 @@ nav li a:hover {
 article {
 	
 	float: right;
- 	width: 77%;
-	padding: 20px 10px;
-	margin: 0 0 0 0px;
+ 	width: 780px;
 	display: inline;
+	padding-left: 16px;	
+	min-height: 552px;
+	border-left: 1px solid #8F857E;
 }
 
 article a {
@@ -69,7 +109,8 @@ article a {
 }
 
 article h2 {
-	margin: 0;
+	margin-top: 15px;
+	color: #969696;
 }
 
 article h6 {
@@ -81,28 +122,54 @@ aside {
 	clear: left;
 	float: left;
 	width: 17%;
-	padding: 10px 10px;
-	margin: 0 0 0 0;
+	margin-left: 50px;
 	display: block;
-	min-height: 600px;
-	border-right: 1px solid #333;
+	
 }
 
-#left h3 {
-	margin: 0;
+aside h3{
+	margin-left: 15px;
+	color: #969696;
+}
+
+aside ul {
+	margin-left: 10px;
+	color: #969696;
 }
 
 footer {
 	clear: both;
-	background: #ccc;
-	text-align: right;
-	padding: 20px;
-	height: 1%;
+	float: right;
+	font-size: 70%;
+	color: #969696;
+	padding-top: 40px;
+}
+
+table {
+	margin-top: 10px;
+	color: #969696;
+	border-spacing: 0px;
 	
 }
 
-#inventory {
-	
+table th {
+	border-bottom: 2px solid #FC8626;
+	padding-right: 7px;
+}
+table td {
+	color: #969696;
+	padding-right: 7px;
+	border-bottom: 1px solid #FC8626;
+}
+
+table tr:hover {
+	background-color: #A88568;
+	color: #FFF;	
+}
+
+table tr:hover td {
+	background-color: #A88568;
+	color: #FFF;
 }
 
 /* Drop-Down Navigation */

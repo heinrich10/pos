@@ -1,8 +1,8 @@
 package com.app.inv.model;
 
 public class Unit {
-	private String codeUnit;
-    private String name;
+	protected String codeUnit;
+    protected String name;
     
     /*
     public Unit(String codeUnit, String name){

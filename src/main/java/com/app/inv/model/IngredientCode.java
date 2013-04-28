@@ -7,32 +7,44 @@ public class IngredientCode {
     private String typeCode;
     private String type;
     
-    public IngredientCode(String code, String brand, String name, String type_code, String type){
-        this.code = code;
-        this.brand = brand;
-        this.name = name;
-        this.typeCode = type_code;
-        this.type = type;
-    }
-    
     public String getCode(){
         return code;
+    }
+    
+    public void setCode(String code){
+    	this.code = code;
     }
     
     public String getBrand(){
         return brand;
     }
     
+    public void setBrand(String brand){
+    	this.brand = brand;
+    }
+    
     public String getName(){
         return name;
+    }
+    
+    public void setName(String name){
+    	this.name = name;
     }
     
     public String getTypeCode(){
         return typeCode;
     }
     
+    public void setTypeCode(String typeCode){
+    	this.typeCode = typeCode;
+    }
+    
     public String getType(){
         return type;
+    }
+    
+    public void setType(String type){
+    	this.type = type;
     }
     
     public String getFullName(){

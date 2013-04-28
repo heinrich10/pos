@@ -4,16 +4,11 @@
 <%@ page session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
-<style type="text/css">
-<%@
-include file = "/WEB-INF/resources/design.css" 
-%>
-</style>
+<link rel="stylesheet" type="text/css" href="<c:url value = "/resources/design.css"/>"/>
 <title>Active Inventory</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
 </script>
@@ -44,18 +39,31 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<div id="icon">
+	<img src="<c:url value = "/resources/magnum_opus_logo.jpg"/>" width="200" height="200"
+    alt="Logo Here" />
+</div>
 <header>
 	<h1>Inventory</h1>
 </header>
 
-<%@ include file="/WEB-INF/resources/navbar.jsp" %>
-
+<%@ include file="/resources/navbar.jsp" %>
+<nav id="nav2">
+	<ul>
+		<li><a href="active">Active</a></li>
+		<li><a href="pending">Pending</a></li>
+		<li><a href="hist">History</a></li>
+	</ul>
+</nav>
 <c:choose>
 	<c:when test = "${model.tabletype == 'active'}">
+		
 		<article>
-			<a href="url">Refresh</a>
+			<a href="active">Refresh</a>
 			<h2>Inventory</h2>
-			<table id="inventory" border="1">
+			<form id="select" action="test" method="post">
+			
+			<table>
 				<tr>
 					<th>Item Number</th>
 					<th>Name</th>
@@ -78,55 +86,143 @@ $(document).ready(function(){
 						<td><c:out value="${prod.comment}" /></td>
 					</tr>
 				</c:forEach>
-			</table>
+				
+			</table>	
+			
+			</form>
+				
+				
+			
 		</article>
 		<aside>
 			<h3>Options</h3>
-			<a href="pending"> View Orders </a>
+			<ul>
+				<li><a href="pending"> View Orders </a></li>
+			</ul>
+			
+			
 		</aside>				
 	</c:when>
 		
 	<c:when test = "${model.tabletype == 'pending'}">
 		<article>
-			<a href="url">Refresh</a>
+			<a href="pending">Refresh</a>
 			<h2>Orders</h2>
-			<table id="inventory" border="1">
+			<form id="select" method="post">
+			
+				<table>
+					<tr>
+						<th> </th>
+						<th>Item Number</th>
+						<th>Name</th>
+						<th>Quantity</th>
+						<th>Unit</th>
+						<th>Order Date</th>
+					</tr>
+					<c:forEach items="${model.inventory}" var="prod">
+						<tr>
+							<td>
+								<input type = "checkbox" name = "itemNumber" value = "${prod.itemNumber}" />
+							</td>
+							<td><c:out value="${prod.itemNumber}" /></td>
+							<td><c:out value="${prod.name}" /></td>
+							<td><c:out value="${prod.quantity}" /></td>
+							<td><c:out value="${prod.unit}" /></td>
+							<td><c:out value="${prod.orderDate}" /></td>
+						</tr>
+					</c:forEach>
+				</table>
+				<input type="submit" formaction="pending/delivered" formmethod="get" value="Delivered" />	
+				<input type="submit" formaction="pending/delete" value="Delete"/>
+			</form>
+		</article>
+		<aside>
+			<h3>Options</h3>
+			<ul>
+				<li><a href="pending/add">Add</a></li>
+				<li><a href="url">Delivered</a></li>
+			</ul>
+			
+			
+		</aside>
+	</c:when>
+	
+	<c:when test="${tabletype == 'deliver'}">
+		<sf:form method="post" modelAttribute="inventory" >
+			<table>
+				<tr>
+					<th>Item Number</th>
+					<th>Name</th>
+					<th>Quantity</th>
+					<th>Unit</th>
+					<th>Roast Date</th>
+					<th>Exp Date</th>
+					<th>Comment</th>
+				</tr>
+				<c:forEach items="${inventory.inventoryList}" var="inventoryList" varStatus="status">
+					<tr>
+						<td><c:out value="${inventoryList.itemNumber}" /></td>
+						<td><c:out value="${inventoryList.name}" /></td>
+						<td><c:out value="${inventoryList.quantity}" /></td>
+						<td><c:out value="${inventoryList.unit}" /></td>
+						<td><sf:input path="inventoryList[${status.index}].roastDate" /></td>
+						<td><sf:input path="inventoryList[${status.index}].expDate" /></td>
+						<td><sf:input path="inventoryList[${status.index}].comment" /></td>
+					</tr>
+				</c:forEach>
+			</table>
+			<input type="submit" value="Accept" />
+		</sf:form>
+	</c:when>
+	
+	<c:when test="${tabletype == 'history'}">
+		<article>	
+			<h2>Order History</h2>
+			<table>
 				<tr>
 					<th>Item Number</th>
 					<th>Name</th>
 					<th>Quantity</th>
 					<th>Unit</th>
 					<th>Order Date</th>
-					
-					
+					<th>Delivery Date</th>
 				</tr>
-				<c:forEach items="${model.inventory}" var="prod">
+				<c:forEach items="${inventory}" var="prod">
 					<tr>
 						<td><c:out value="${prod.itemNumber}" /></td>
 						<td><c:out value="${prod.name}" /></td>
 						<td><c:out value="${prod.quantity}" /></td>
 						<td><c:out value="${prod.unit}" /></td>
 						<td><c:out value="${prod.orderDate}" /></td>
-						<td><button type="submit">Edit</button></td>
-						<td>
-							<form id="delete" action="pending/delete" method="post">
-								<input id="itemNumber" name="itemNumber" type="hidden" value="${prod.itemNumber}"/>
-								<input type="submit" value="Delete" onClick="return confirm('Do you want to delete item number ${prod.itemNumber}?')"/>
-							</form>
-						</td>
+						<td><c:out value="${prod.deliveryDate}" /></td>
 					</tr>
 				</c:forEach>
 			</table>
 		</article>
 		<aside>
 			<h3>Options</h3>
-			<a href="pending/add">Add</a><br>
-			<a href="url">Delivered</a><br>
-			
+			<ul>
+				<li><a href="active">Active</a></li>
+				<li><a href="pending">Pending</a></li>
+			</ul>
 		</aside>
-	</c:when>
+	</c:when> 
+	
+	<c:otherwise>
+		<article>
+			<h2>Please choose action</h2>
+		</article>
+		<aside>
+			<h3>Options</h3>
+			<ul>
+				<li><a href="active">Active</a></li>
+				<li><a href="pending">Pending</a></li>
+				<li><a href="hist">History</a></li>
+			</ul>
+		</aside>
+	</c:otherwise>
 </c:choose>
 			
-<%@ include file="/WEB-INF/resources/footer.html" %>
+<%@ include file="/resources/footer.html" %>
 </body>
 </html>

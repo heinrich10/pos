@@ -9,34 +9,48 @@ public class MenuItem {
     private String typeCode;
     private double recipePrice;
 
-    public MenuItem(String code, String type, String name, String description, double price, String typeCode){
-        this.code = code;
-        this.type = type;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.typeCode = typeCode;
-                
+    public void setCode(String code){
+    	this.code = code;
     }
     
     public String getCode(){
         return code;
     }
-     
+    
+    public void setType(String type){
+    	this.type = type;
+    }
+    
     public String getType(){
         return type;
+    }
+    
+    public void setName(String name){
+    	this.name = name;
     }
     
     public String getName(){
         return name;
     }
     
+    public void setDescription(String description){
+    	this.description = description;
+    }
+    
     public String getDescription(){
         return description;
     }
     
+    public void setPrice(double price){
+    	this.price = price;
+    }
+    
     public double getPrice(){
         return price;
+    }
+    
+    public void setTypeCode(String typeCode){
+    	this.typeCode = typeCode;
     }
     
     public String getTypeCode(){

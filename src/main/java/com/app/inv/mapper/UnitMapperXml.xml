@@ -5,11 +5,74 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.app.inv.mapper.UnitMapper">
 	<select id="loadUnit" resultType="com.app.inv.model.Unit">
-		SELECT  
+		select  
 		code_unit as codeUnit, 
 		name 
-		FROM 
+		from
 		core_units	
 	</select>
+	
+	<select id="loadUnitAndPostUnit" resultType="com.app.inv.model.UnitAndPostUnit" parameterType="String">
+		select
+		cu.code_unit as codeUnit, 
+		cu.name,
+		cu.code_post_unit as codePostUnit,
+		cu2.name as namePostUnit,
+		cu.conversion_factor as conversionFactor
+		from
+		core_units cu
+		left join
+		core_units cu2
+		on
+		cu.code_post_unit = cu2.code_unit
+		<if test="_parameter != null">
+            where
+            cu.code_unit = #{codeUnit}
+        </if>
+		 
+	</select>
+	
+	<insert id="saveUnit" parameterType="com.app.inv.model.UnitAndPostUnit">
+		insert into 
+        core_units(
+        create_date,
+        update_date,
+        update_user, 
+        update_program,
+        code_unit,
+        name,
+        code_post_unit, 
+        conversion_factor) 
+        values (
+        sysdate(),
+        sysdate(), 
+        "pgm", 
+        "UnitService", 
+        #{codeUnit}, 
+        #{name}, 
+        #{codePostUnit}, 
+        #{conversionFactor})
+	</insert>
+	
+	<update id="updateUnit" parameterType="com.app.inv.model.UnitAndPostUnit">
+		update 
+        core_units
+        SET 
+        update_date = sysdate(), 
+        update_user = "pgm", 
+        update_program = "UnitService", 
+        name = #{name},
+        code_post_unit = #{codePostUnit},
+        conversion_factor = #{conversionFactor}
+        where 
+        code_unit = #{codeUnit}
+	</update>
+	
+	<delete id="deleteUnit" parameterType="String">
+		delete from 
+        core_units 
+        where 
+        code_unit = #{codeUnit}
+	</delete>
 </mapper>
 

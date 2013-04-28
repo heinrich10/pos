@@ -19,7 +19,7 @@
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
-
+	
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
@@ -28,6 +28,9 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<!-- resources mapping="/resources/**" location="/resources/" /-->
 	<context:component-scan base-package="com.app.inv.controller" />
+	
+	<mvc:resources mapping="/resources/**" 
+	location="/resources/" />
 	
 	<mvc:annotation-driven />
 	
@@ -47,10 +50,12 @@
 	
 	<!-- define the SqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
+    	<property name="dataSource" ref="dataSource" />
+    	<property name="typeAliasesPackage" value="com.app.inv.model" />
         <property name="mapperLocations" value="classpath*:com/app/inv/mapper/*.xml"/>
     </bean>
-	
+    
+    
 	<!-- bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.app.pos.mapper"></property>
 	</bean-->
@@ -71,6 +76,11 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
+	<bean id="menuItemMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.app.inv.mapper.MenuItemMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	
 	<bean id="inventoryValidator" class="com.app.inv.validator.InventoryValidator">
 	</bean>
 	
@@ -87,5 +97,8 @@
     <!--  bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="org.mybatis.jpetstore.persistence" />
     </bean-->
-	
+    
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource"/>
+	</bean>
 </beans>

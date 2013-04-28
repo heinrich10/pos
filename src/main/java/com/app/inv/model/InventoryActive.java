@@ -10,10 +10,14 @@ public class InventoryActive extends Inventory {
     private String comment;
     
     public InventoryActive(){
-    	super();
     	
     }
-	
+    
+    public InventoryActive(Inventory inventory){
+    	super(inventory);
+    	
+    }
+    
     public Date getStockDate(){
     	return stockDate;
         
@@ -46,4 +50,6 @@ public class InventoryActive extends Inventory {
     public void setComment(String comment){
         this.comment = comment;
     }
+    
+    
 }
