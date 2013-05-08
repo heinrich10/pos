@@ -65,7 +65,7 @@ public class InventoryController {
 	@Transactional(readOnly=true)
 	public ModelAndView getInventory() {
 
-		ArrayList<InventoryActive> arrInventoryActive;
+		List<InventoryActive> arrInventoryActive;
 		
 		arrInventoryActive = inventoryMapper.loadInventoryActive();
 		Map<String, Object> myModel = new HashMap<String, Object>();
@@ -81,7 +81,7 @@ public class InventoryController {
 	@Transactional(readOnly=true)
 	public ModelAndView getInventoryPending() {
 
-		ArrayList<InventoryPending> arrInventory;
+		List<InventoryPending> arrInventory;
 
 		arrInventory = inventoryMapper.loadInventoryPending();
 		Map<String, Object> myModel = new HashMap<String, Object>();
@@ -95,7 +95,7 @@ public class InventoryController {
 	@RequestMapping(value = "/hist", method = RequestMethod.GET)
 	@Transactional(readOnly=true)
 	public ModelAndView getInventoryHist(){
-		ArrayList<InventoryHist> arrInventoryHist;
+		List<InventoryHist> arrInventoryHist;
 
 		arrInventoryHist = inventoryMapper.loadInventoryHist();
 		Map<String, Object> myModel = new HashMap<String, Object>();
@@ -108,8 +108,8 @@ public class InventoryController {
 	
 	@RequestMapping(value = "/pending/add", method = RequestMethod.GET)
 	public ModelAndView addInventoryPending(Map<String, Object> myModel){
-		ArrayList<IngredientCode> arrIngredientCode;
-		ArrayList<Unit> arrUnit;
+		List<IngredientCode> arrIngredientCode;
+		List<Unit> arrUnit;
 		Inventory inventory = new Inventory();
 		
 		arrIngredientCode = ingredientMapper.loadIngredientCode();
@@ -150,9 +150,9 @@ public class InventoryController {
 		
 		
 		
-		ArrayList<InventoryPending> arrInventory = inventoryMapper.loadInventoryPendingList(itemNumber);
+		List<InventoryPending> arrInventory = inventoryMapper.loadInventoryPendingList(itemNumber);
 		
-		ArrayList<InventoryActive> arrInventoryActive = new ArrayList<InventoryActive>();
+		List<InventoryActive> arrInventoryActive = new ArrayList<InventoryActive>();
 		for(int i = 0; i < arrInventory.size(); i++){
 			arrInventoryActive.add(new InventoryActive(arrInventory.get(i)));
 		}
@@ -180,10 +180,10 @@ public class InventoryController {
 			@RequestParam("itemNumber") long[] itemNumber
 			){
 		
-		ArrayList<InventoryActive> arrInventoryActive = (ArrayList<InventoryActive>) inventoryActiveList.getInventoryList();
+		List<InventoryActive> arrInventoryActive = (ArrayList<InventoryActive>) inventoryActiveList.getInventoryList();
 		
 		
-		ArrayList<InventoryPending> arrInventoryPending = inventoryMapper.loadInventoryPendingList(itemNumber);
+		List<InventoryPending> arrInventoryPending = inventoryMapper.loadInventoryPendingList(itemNumber);
 		
 		for(int i = 0; i < arrInventoryPending.size(); i++){
 			InventoryActive inventoryActive = arrInventoryActive.get(i);

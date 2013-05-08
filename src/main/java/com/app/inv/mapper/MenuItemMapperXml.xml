@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.app.inv.mapper.MenuItemMapper">
 	
-	<select id="loadMenuItem" resultType="com.app.inv.model.MenuItem" parameterType="String">
+	<select id="loadMenuItem" resultType="MenuItem">
 		select
 		omi.code,
 		omt.name as type,
@@ -21,26 +21,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		omi.type = omt.code
 		<if test="_parameter != null">
             where
-            omi.code = #{codeMenuItem}
+            omi.code in
+            <foreach item="item" index="index" collection="array"
+        	open="(" separator="," close=")">
+				#{item}
+			</foreach>
         </if>
+        order by omi.code
 	</select>
 	
-	<update id="updateMenuItem" parameterType="com.app.inv.model.MenuItem">
-		update
-		oms_menu_item
-		set
-		update_date = sysdate(),
-		update_user = "pgm", 
-		update_program = "MIService", 
-		type = #{typeCode}, 
-		name = #{name}, 
-		description = #{description}, 
-		price = #{price} 
-		where 
-		code = #{code}
+	<update id="updateMenuItem" parameterType="MenuItem">
+			update
+			oms_menu_item
+			set
+			update_date = sysdate(),
+			update_user = "pgm", 
+			update_program = "MIService", 
+			type = #{typeCode}, 
+			name = #{name}, 
+			description = #{description}, 
+			price = #{price} 
+			where 
+			code = #{code}
 	</update>
 	
-	<select id="loadMenuItemType" resultType="com.app.inv.model.MenuItemType" parameterType="String">
+	<select id="loadMenuItemType" resultType="MenuItemType" parameterType="String">
 		select
 		code,
 		name 
@@ -82,11 +87,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		code = #{code}
     </update>
     
-    <delete id="deleteMenuItemType" parameterType="String">
+    <delete id="deleteMenuItemType">
     	delete from 
         oms_mi_type 
         where 
-        code = #{code}
+        code in
+        <foreach item="item" index="index" collection="array"
+        	open="(" separator="," close=")">
+			#{item}
+		</foreach>
     </delete>
 	
 	

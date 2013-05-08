@@ -21,9 +21,4 @@ public class InventoryActiveList {
 	public void setInventoryList(List<InventoryActive> inventoryList){
 		this.inventoryList = inventoryList;
 	}
-	
-	public InventoryActive inventoryList(int index){
-		return inventoryList.get(index);
-	}
-	
 }

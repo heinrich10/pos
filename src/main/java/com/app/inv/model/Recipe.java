@@ -1,35 +1,48 @@
 package com.app.inv.model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.List;
 
-public class Recipe {
-private ArrayList<Ingredient> arrIngredient;
+public class Recipe implements Serializable{
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9199123488689936218L;
+	private List<Ingredient> ingredientList;
     
-    public Recipe(){
-        arrIngredient = new ArrayList();
+	public Recipe(){
+		
+	}
+	
+    public Recipe(List<Ingredient> ingredientList){
+    	this.ingredientList = ingredientList;
     }
     
     public void addIngredient(Ingredient ingredient){
-        arrIngredient.add(ingredient);
+    	ingredientList.add(ingredient);
     }
     
     public void removeIngredient(Ingredient ingredient){
-        arrIngredient.remove(ingredient);
+    	ingredientList.remove(ingredient);
     }
     
     public Ingredient removeIngredient(int index){
-        return arrIngredient.remove(index);
+        return ingredientList.remove(index);
     }
     
     public Ingredient getIngredient(int index){
-        return arrIngredient.get(index);
+        return ingredientList.get(index);
     }
     
     public int size(){
-        return arrIngredient.size();
+        return ingredientList.size();
     }
     
     public void replace(int index, Ingredient ingredient){
-        arrIngredient.set(index, ingredient);
+    	ingredientList.set(index, ingredient);
+    }
+    
+    public List<Ingredient> getIngredientList(){
+    	return ingredientList;
     }
 }

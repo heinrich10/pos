@@ -1,13 +1,11 @@
 package com.app.inv.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.app.inv.mapper.MenuItemMapper;
 import com.app.inv.model.MenuItem;
+import com.app.inv.model.MenuItemList;
 import com.app.inv.model.MenuItemType;
 
 @Controller
@@ -28,46 +27,52 @@ public class MenuItemController {
 	@RequestMapping(value = "/mi", method = RequestMethod.GET)
 	public ModelAndView viewMenuItem(Map<String, Object> myModel){
 		
-		ArrayList<MenuItem> arrMenuItem = menuItemMapper.loadMenuItem();
+		MenuItemList menuItemList = new MenuItemList(menuItemMapper.loadMenuItem());
+		
+		List<MenuItemType> arrMenuItemType = menuItemMapper.loadMenuItemType();
 		
 		myModel.put("tabletype", "menuItem");
-		myModel.put("object", arrMenuItem);
+		myModel.put("menuItem", menuItemList);
+		myModel.put("mitype", arrMenuItemType);
 		
-		return new ModelAndView("maintenance", "model", myModel);
+		return new ModelAndView("maintenance", myModel);
 		
 	}
 	
 	@RequestMapping(value = "/mi/edit", method=RequestMethod.GET)
 	public ModelAndView editMenuItem(
-			@RequestParam("code") String code,
-			Map<String, Object> myModel
+			@RequestParam("code") String[] code,
+			Map<String, Object> myModel,
+			MenuItemList menuItemList
 			){
-		MenuItem menuItem = menuItemMapper.loadMenuItem(code);
-		ArrayList<MenuItemType> arrMenuItem = menuItemMapper.loadMenuItemType();
+		menuItemList.setMenuItemList(menuItemMapper.loadMenuItem(code));
+		List<MenuItemType> arrMenuItem = menuItemMapper.loadMenuItemType();
 		
-		myModel.put("menuItem", menuItem);
+		myModel.put("menuItem", menuItemList);
 		myModel.put("menuItemType", arrMenuItem);
-		myModel.put("editType", "menuItem");
+		myModel.put("tabletype", "menuItemEdit");
 		
-		return new ModelAndView("edit", myModel);
+		return new ModelAndView("maintenance", myModel);
 		
 	}
 	
 	@RequestMapping(value= "/mi/edit", method=RequestMethod.POST)
 	public String updateMenuItem(
-			@ModelAttribute("menuItem") MenuItem menuItem
+			@ModelAttribute("menuItemList") MenuItemList menuItemList
 			){
 		
-		menuItemMapper.updateMenuItem(menuItem);
+		for(MenuItem mi:menuItemList.getMenuItemList()){
+			menuItemMapper.updateMenuItem(mi);
+		}
 		
 		return "redirect:/maintenance/mi";
 		
 	}
 	
-	@RequestMapping(value = "/mi/mitype", method=RequestMethod.GET)
+	@RequestMapping(value = "/mi/type", method=RequestMethod.GET)
 	public ModelAndView viewMenuItemType(Map<String, Object> myModel){
 		
-		ArrayList<MenuItemType> arrMenuItemType = menuItemMapper.loadMenuItemType();
+		List<MenuItemType> arrMenuItemType = menuItemMapper.loadMenuItemType();
 		
 		myModel.put("object", arrMenuItemType);
 		myModel.put("tabletype", "mitype");
@@ -76,7 +81,7 @@ public class MenuItemController {
 		
 	}
 	
-	@RequestMapping(value = "/mi/mitype/add", method=RequestMethod.GET)
+	@RequestMapping(value = "/mi/type/add", method=RequestMethod.GET)
 	public ModelAndView addMenuItemType(Map<String, Object> myModel){
 		
 		myModel.put("editType", "miType");
@@ -85,45 +90,47 @@ public class MenuItemController {
 		return new ModelAndView("edit", myModel);
 	}
 	
-	@RequestMapping(value = "/mi/mitype/add", method=RequestMethod.POST)
+	@RequestMapping(value = "/mi/type/add", method=RequestMethod.POST)
 	public String saveMenuItemType(
 			@ModelAttribute("menuItemType") MenuItemType menuItemType
 			){
 		
 		menuItemMapper.saveMenuItemType(menuItemType);
 		
-		return "redirect:/maintenance/mi/mitype";
+		return "redirect:/maintenance/mi/type";
 	}
 	
-	@RequestMapping(value = "/mi/mitype/edit", method=RequestMethod.GET)
-	public ModelAndView editMenuItemType(
-			@RequestParam("code") String code,
-			Map<String, Object> myModel
-			){
-		
-		MenuItemType menuItemType = menuItemMapper.loadMenuItemType(code);
-		myModel.put("menuItemType", menuItemType);
-		myModel.put("editType", "miType");
-		return new ModelAndView("edit", myModel);
-	}
+	//@RequestMapping(value = "/mi/mitype/edit", method=RequestMethod.GET)
+	//public ModelAndView editMenuItemType(
+	//		@RequestParam("code") String code,
+	//		Map<String, Object> myModel
+	//		){
+	//	
+	//	MenuItemType menuItemType = menuItemMapper.loadMenuItemType(code);
+	//	myModel.put("menuItemType", menuItemType);
+	//	myModel.put("editType", "miType");
+	//	return new ModelAndView("edit", myModel);
+	//}
 	
-	@RequestMapping(value = "/mi/mitype/edit", method=RequestMethod.POST)
-	public String updateMenuItemType(
-			@ModelAttribute("menuItemType") MenuItemType menuItemType
-			){
-		menuItemMapper.updateMenuItemType(menuItemType);
-		return "redirect:/maintenance/mi/mitype";
-	}
+	//@RequestMapping(value = "/mi/mitype/edit", method=RequestMethod.POST)
+	//public String updateMenuItemType(
+	//		@ModelAttribute("menuItemType") MenuItemType menuItemType
+	//		){
+	//	menuItemMapper.updateMenuItemType(menuItemType);
+	//	return "redirect:/maintenance/mi/mitype";
+	//}
 	
-	@RequestMapping(value = "/mi/mitype/delete", method=RequestMethod.POST)
+	@RequestMapping(value = "/mi/type/delete", method=RequestMethod.POST)
 	public String deleteMenuItemType(
-			@RequestParam("code") String code
+			@RequestParam("code") String[] code
 			){
 		
 		menuItemMapper.deleteMenuItemType(code);
 		
-		return "redirect:/maintenance/mi/mitype";
+		return "redirect:/maintenance/mi/type";
 	}
+	
+	
 
 /*
 public Recipe loadRecipe(MenuItem menuItem){

@@ -1,6 +1,6 @@
 package com.app.inv.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -28,7 +28,7 @@ public class UnitController {
 	@RequestMapping("/unit")
 	public ModelAndView viewUnit(Map<String, Object> myModel){
 		
-		ArrayList<UnitAndPostUnit> arrUnitAndPostUnit = unitMapper.loadUnitAndPostUnit();
+		List<UnitAndPostUnit> arrUnitAndPostUnit = unitMapper.loadUnitAndPostUnit();
 		
 		myModel.put("tabletype", "unit");
 		myModel.put("object", arrUnitAndPostUnit);
@@ -42,7 +42,7 @@ public class UnitController {
 		
 		UnitAndPostUnit unitAndPostUnit = new UnitAndPostUnit();
 		
-		ArrayList<Unit> arrUnit = unitMapper.loadUnit();
+		List<Unit> arrUnit = unitMapper.loadUnit();
 		
 		myModel.put("unit", arrUnit);
 		myModel.put("unitAndPostUnit", unitAndPostUnit);
@@ -69,7 +69,7 @@ public class UnitController {
 			Map<String, Object> myModel){
 		
 		UnitAndPostUnit unitAndPostUnit = unitMapper.loadUnitAndPostUnit(codeUnit);
-		ArrayList<Unit> arrUnit = unitMapper.loadUnit();
+		List<Unit> arrUnit = unitMapper.loadUnit();
 		
 		myModel.put("unit", arrUnit);
 		myModel.put("unitAndPostUnit", unitAndPostUnit);

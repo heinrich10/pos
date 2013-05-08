@@ -154,11 +154,14 @@ table {
 
 table th {
 	border-bottom: 2px solid #FC8626;
-	padding-right: 7px;
+	padding-right: 4px;
+	padding-left: 3px;
+	
 }
 table td {
 	color: #969696;
-	padding-right: 7px;
+	padding-right: 4px;
+	padding-left: 3px;
 	border-bottom: 1px solid #FC8626;
 }
 

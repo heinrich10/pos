@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <%@ page session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
@@ -47,6 +46,8 @@
 			</table>
 		</sf:form>
 	</c:when>
+	
+	
 	
 	<c:when test="${editType == 'unit'}">
 		<sf:form method="post" commandName="unitAndPostUnit" >
@@ -201,6 +202,31 @@
 			        	<sf:select path="typeCode" >
 			        		<sf:options items="${ingredientType}" itemLabel="name" itemValue="code"/>
 			        	</sf:select>
+			        </td>
+			    <tr>
+			        <td colspan="3">
+			            <input type="submit" value="Accept" />
+			        </td>
+			    </tr>
+			    </tr>
+			</table>
+		</sf:form>
+	</c:when>
+	
+	<c:when test="${editType == 'ingredientType'}">
+		<sf:form method="post" commandName="ingredientType" >
+			<table>
+				<tr>
+			        <td>Code:</td>
+			        <td><sf:input path="code" /></td>
+			    </tr>
+				<tr>
+			        <td>Name:</td>
+			        <td><sf:input path="name" /></td>
+			    </tr>
+			    <tr>
+			        <td colspan="3">
+			            <input type="submit" value="Accept" />
 			        </td>
 			    </tr>
 			</table>

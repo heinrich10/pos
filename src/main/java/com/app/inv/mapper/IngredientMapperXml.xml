@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.app.inv.mapper.IngredientMapper">
-   <select id = "loadIngredientCode" resultType="com.app.inv.model.IngredientCode">
+   <select id = "loadIngredientCode" resultType="IngredientCode">
         SELECT  
         IIC.code,
         IIC.brand, 
@@ -20,13 +20,77 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         IIC.code
     </select>
     
-    <select id = "loadIngredientType" resultType="com.app.inv.model.IngredientType">
+    <insert id = "saveIngredientCode" parameterType="IngredientCode">
+        insert into 
+        im_ingredient_code(
+        create_date, 
+        update_date, 
+        update_user, 
+        update_program, 
+        code, 
+        brand, 
+        name,
+        type) 
+        values (
+        sysdate(),
+        sysdate(), 
+        "pgm",
+        "ICService", 
+        #{code}, 
+        #{brand}, 
+        #{name}, 
+        #{typeCode})
+    </insert>
+    
+    <delete id="deleteIngredientCode">
+        delete
+        from 
+        im_ingredient_code 
+        where 
+        code in 
+        <foreach item="item" index="index" collection="array"
+        	open="(" separator="," close=")">
+			#{item}
+		</foreach>
+    </delete>
+    
+    <select id = "loadIngredientType" resultType="IngredientType">
         SELECT
         code, 
         name 
         FROM 
         im_ingredient_type
     </select>
+    
+    <delete id="deleteIngredientType">
+        delete
+        from 
+        im_ingredient_type 
+        where 
+        code in 
+        <foreach item="item" index="index" collection="array"
+        	open="(" separator="," close=")">
+			#{item}
+		</foreach>
+    </delete>
+    
+    <insert id = "saveIngredientType" parameterType="IngredientType">
+        insert into 
+        im_ingredient_type(
+        create_date, 
+        update_date, 
+        update_user, 
+        update_program, 
+        code, 
+        name)
+        values (
+        sysdate(),
+        sysdate(), 
+        "pgm",
+        "ICService", 
+        #{code}, 
+        #{name})
+    </insert>
     
     <select id = "loadIngredientLinkOne" parameterType="String" resultMap="loadIngredientLinkResultMap">
         SELECT 
@@ -98,35 +162,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </constructor>
     </resultMap>
     
-    <insert id = "saveIngredientCode" parameterType="com.app.inv.model.IngredientCode">
-        insert into 
-        im_ingredient_code(
-        create_date, 
-        update_date, 
-        update_user, 
-        update_program, 
-        code, 
-        brand, 
-        name,
-        type) 
-        values (
-        sysdate(),
-        sysdate(), 
-        "pgm",
-        "ICService", 
-        #{code}, 
-        #{brand}, 
-        #{name}, 
-        #{typeCode})
-    </insert>
     
-    <delete id="deleteIngredientCode" parameterType="String">
-        delete
-        from 
-        im_ingredient_code 
-        where 
-        code = #{code}
-    </delete>
     
     <insert id="saveInventoryLink" parameterType="hashmap">
         insert into 

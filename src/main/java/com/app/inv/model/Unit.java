@@ -1,6 +1,12 @@
 package com.app.inv.model;
 
-public class Unit {
+import java.io.Serializable;
+
+public class Unit implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5718485499627142738L;
 	protected String codeUnit;
     protected String name;
     

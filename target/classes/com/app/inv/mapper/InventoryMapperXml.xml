@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.app.inv.mapper.InventoryMapper">
-	<select id="loadInventoryActive" resultType = "com.app.inv.model.InventoryActive">
+	<select id="loadInventoryActive" resultType = "InventoryActive">
 		SELECT
 		III.item_number as itemNumber,
 		CONCAT(IIC.brand, " ", IIC.name) as name,
@@ -29,11 +29,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		core_units CU
 		ON
 		III.code_unit = CU.code_unit
-
+		
+		order by
+        III.item_number
 
 	</select>
 	
-	<select id = "loadInventoryPending" resultType="com.app.inv.model.InventoryPending">
+	<select id = "loadInventoryPending" resultType="InventoryPending">
         SELECT 
         IIP.item_number as itemNumber,
         CONCAT(IIC.brand, " ", IIC.name) as name,
@@ -53,10 +55,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN core_units CU 
         ON 
         IIP.code_unit = CU.code_unit
-      
+      	order by
+        IIP.item_number
     </select>
     
-    <insert id = "saveInventoryPending" parameterType="com.app.inv.model.Inventory">
+    <select id = "loadInventoryPendingList" resultType="InventoryPending">
+        SELECT 
+        IIP.item_number as itemNumber,
+        CONCAT(IIC.brand, " ", IIC.name) as name,
+        IIP.code_ingredient as codeIngredient,
+        IIP.quantity,
+        IIP.unit_price as unitPrice,
+        CU.name as unit,
+        IIP.code_unit as unitCode,
+        IIP.total_price as totalPrice,
+        IIP.order_date as orderDate 
+        FROM 
+        im_ingredient_pending IIP 
+        JOIN
+        im_ingredient_code IIC 
+        ON IIP.code_ingredient = IIC.code 
+      
+        JOIN core_units CU 
+        ON 
+        IIP.code_unit = CU.code_unit
+      	
+      	where
+      	IIP.item_number in
+      	<foreach item="item" index="index" collection="array"
+        	open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		
+		order by
+        IIP.item_number
+    </select>
+    
+    <select id="loadInventoryHist" resultType="InventoryHist">
+    	select
+    	item_number as itemNumber,
+        name,
+        quantity,
+        unit_price as unitPrice,
+        unit,
+        total_price as totalPrice,
+        order_date as orderDate,
+        timestamp as deliveryDate
+        from
+        im_ingredient_pending_hist 
+        order by
+        item_number
+    </select>
+    
+    <insert id = "saveInventoryPending" parameterType="Inventory">
         insert into 
         im_ingredient_pending(
         create_date, 
@@ -82,14 +133,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         sysdate())
     </insert>
     
-    <delete id="deleteInventoryPending" parameterType="_long">
+    <delete id="deleteInventoryPending" >
         delete from 
         im_ingredient_pending 
         where 
-        item_number = #{index}
+        item_number in 
+        <foreach item="item" index="index" collection="array"
+        	open="(" separator="," close=")">
+			#{item}
+		</foreach>
     </delete>
     
-    <insert id="saveToInventory" parameterType="com.app.inv.model.Inventory">
+    <insert id="saveToInventory" parameterType="InventoryActive">
         insert into 
         im_ingredient_inventory(
         create_date, 
@@ -105,23 +160,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         roast_date,
         exp_date,
         remarks) 
-        values (
-        sysdate(), 
-        sysdate(), 
-        "pgm", 
-        "IPService", 
-        #{codeIngredient}, 
-        #{quantity},
-        #{totalPrice},
-        #{unitCode}, 
-        #{unitPrice}, 
-        sysdate(), 
-        #{roastDate},
-        #{expDate},
-        #{comment})
+        values
+        <foreach item="item" index="index" collection="list"
+        	separator="," >
+			(sysdate(), 
+        	sysdate(), 
+        	"pgm", 
+        	"IPService", 
+        	#{item.codeIngredient}, 
+        	#{item.quantity},
+        	#{item.totalPrice},
+        	#{item.unitCode}, 
+        	#{item.unitPrice}, 
+        	sysdate(), 
+        	#{item.roastDate},
+        	#{item.expDate},
+        	#{item.comment})
+		</foreach> 
     </insert>
     
-    <insert id="addPendingHist" parameterType="com.app.inv.model.Inventory">
+    <insert id="addPendingHist" parameterType="InventoryPending">
         
         insert into 
         im_ingredient_pending_hist(
@@ -129,25 +187,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update_date,
         update_user, 
         update_program,
-        code_ingredient,
+        name,
         quantity,
         unit_price, 
-        code_unit, 
+        unit, 
         total_price, 
-        order_date, 
-        delivery_date) 
-        values (
-        sysdate(),
-        sysdate(), 
-        "pgm", 
-        "IPService", 
-        #{codeIngredient}, 
-        #{quantity}, 
-        #{unitPrice}, 
-        #{unitCode}, 
-        #{totalPrice}, 
-        #{date},
-        sysdate())
+        order_date 
+        ) 
+        values
+        <foreach item="item" index="index" collection="list" 
+        	separator="," > 
+        	(sysdate(),
+        	sysdate(), 
+        	"pgm", 
+        	"IPService", 
+        	#{item.name}, 
+        	#{item.quantity}, 
+        	#{item.unitPrice}, 
+        	#{item.unit}, 
+        	#{item.totalPrice}, 
+        	#{item.orderDate})
+        </foreach>
     </insert>
     
     <delete id="deleteInventory" parameterType="_long">
@@ -160,7 +220,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateInventory" parameterType="map">
         update 
         im_ingredient_inventory
-        SET 
+        set 
         update_date = sysdate(), 
         update_user = "pgm", 
         update_program = "IPService", 

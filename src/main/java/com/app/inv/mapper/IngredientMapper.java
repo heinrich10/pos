@@ -1,7 +1,7 @@
 package com.app.inv.mapper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.app.inv.model.IngredientCode;
 import com.app.inv.model.IngredientType;
@@ -9,17 +9,22 @@ import com.app.inv.model.Inventory;
 
 public interface IngredientMapper {
     
-    ArrayList<IngredientCode> loadIngredientCode();
+    List<IngredientCode> loadIngredientCode();
     
-    ArrayList<IngredientType> loadIngredientType();
+    void saveIngredientCode(IngredientCode ingredientCode);
+    
+    void deleteIngredientCode(String[] code);
+    
+    List<IngredientType> loadIngredientType();
+    
+    void saveIngredientType(IngredientType ingredientType);
+    
+    void deleteIngredientType(String[] code);
     
     Inventory loadIngredientLinkOne(String codeIngredient);
     
     Inventory loadIngredientLinkTwo(String codeIngredient);
+
+    void saveInventoryLink(Map map);
     
-    void saveIngredientCode(IngredientCode ingredientCode);
-    
-    void deleteIngredientCode(String code);
-    
-    void saveInventoryLink(HashMap map);
 }

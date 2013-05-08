@@ -1,6 +1,6 @@
 package com.app.inv.mapper;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.app.inv.model.MenuItem;
 import com.app.inv.model.MenuItemType;
@@ -9,13 +9,13 @@ import com.app.inv.model.MenuItemType;
 
 public interface MenuItemMapper {
 	
-	ArrayList<MenuItem> loadMenuItem();
+	List<MenuItem> loadMenuItem();
 	
-	MenuItem loadMenuItem(String codeMenuItem);
+	List<MenuItem> loadMenuItem(String[] codeMenuItem);
 	
 	void updateMenuItem(MenuItem menuItem);
 	
-	ArrayList<MenuItemType> loadMenuItemType();
+	List<MenuItemType> loadMenuItemType();
 	
 	MenuItemType loadMenuItemType(String code);
 	
@@ -23,7 +23,7 @@ public interface MenuItemMapper {
 	
 	void updateMenuItemType(MenuItemType menuItemType);
 	
-	void deleteMenuItemType(String code);
+	void deleteMenuItemType(String[] code);
 	
 	
 }

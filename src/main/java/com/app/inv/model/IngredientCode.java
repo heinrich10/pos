@@ -1,11 +1,17 @@
 package com.app.inv.model;
 
-public class IngredientCode {
-	private String code;
-    private String brand;
-    private String name;
-    private String typeCode;
-    private String type;
+import java.io.Serializable;
+
+public class IngredientCode implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2229087466330498258L;
+	protected String code;
+	protected String brand;
+	protected String name;
+	protected String typeCode;
+	protected String type;
     
     public String getCode(){
         return code;

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.inv.mapper.RecipeMapper">
+   <select id = "loadRecipe" resultType="Ingredient" parameterType="string">
+        select 
+        OMR.code_menu as codeMenu,
+        OMR.code_ingredient as codeIngredient,
+        IIC.name,
+        quantity,
+        OMR.unit,
+        CU.name as unitName
+        from 
+        oms_mi_recipe OMR
+        join
+        im_ingredient_code IIC
+        on 
+        OMR.code_ingredient = IIC.code
+        join core_units CU
+        on 
+        OMR.unit = CU.code_unit 
+        where 
+        code_menu = #{codeMenu}
+    </select>
+    
+     <select id = "loadIngredientCodeRecipe" resultType="IngredientCodeRecipe">
+        SELECT  
+        IIC.code,
+        IIC.brand, 
+        IIC.name,
+        IIC.type as typeCode, 
+        IIT.name as type 
+        FROM 
+        im_ingredient_code IIC 
+        JOIN 
+        im_ingredient_type IIT
+        ON IIC.type = IIT.code 
+        order by 
+        IIC.code
+    </select>
+    
+    <insert id="saveRecipe" parameterType="Ingredient">
+    	insert
+    	into
+    	oms_mi_recipe(
+    	create_date, 
+    	update_date, 
+    	update_user, 
+    	update_program, 
+    	code_menu, 
+    	code_ingredient, 
+    	quantity, 
+    	unit) values (
+    	sysdate(), 
+    	sysdate(), 
+    	"pgm", 
+    	"RService", 
+    	#{codeMenu}, 
+    	#{codeIngredient}, 
+    	#{quantity}, 
+    	#{unit}) 
+    	on duplicate key 
+    	update 
+    	quantity = #{quantity},
+    	unit = #{unit}, 
+    	update_date = sysdate();
+    </insert>
+</mapper>
