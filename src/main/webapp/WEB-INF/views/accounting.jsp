@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="<c:url value = "/resources/design.css"/>"/>
 <title>Insert title here</title>
-<base href="http://localhost:8080/inv/accounting/"/>
+<base href="http://localhost:8080/erp/accounting/"/>
 </head>
 <body>
 <div id="icon">

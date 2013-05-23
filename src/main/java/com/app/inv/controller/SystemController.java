@@ -3,10 +3,12 @@ package com.app.inv.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.app.inv.helper.MyUserInfo;
 import com.jcraft.jsch.Channel;
@@ -17,16 +19,25 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
 
 @Controller
-@RequestMapping(value="/system/")
+@RequestMapping(value="/system")
 public class SystemController {
 	
-	@RequestMapping(value="shutdown/")
-	public void shutdown(){
+	@RequestMapping(value="/home", method=RequestMethod.GET)
+	public String home(){
 		
+		return "system";
 	}
 	
-	@RequestMapping(value="shutdown/", method=RequestMethod.GET)
+	@RequestMapping(value="/shutdown/", method=RequestMethod.GET)
+	public ModelAndView shutdown(Map<String, Object> myModel){
+		myModel.put("option", "shutdown");
+		return new ModelAndView("system", myModel);
+	}
+	
+	@RequestMapping(value="/shutdown/", method=RequestMethod.POST)
 	public void submitShutdown(JSch jsch){
+		
+		
 		
 		String user = "rick";
 	    String host = "192.168.159.10";
@@ -86,4 +97,9 @@ public class SystemController {
             
 	}
 	
+	@RequestMapping(value="/parameters/", method=RequestMethod.GET)
+	public ModelAndView loadParameters(Map<String, Object> myModel){
+		
+		return new ModelAndView();
+	}
 }
