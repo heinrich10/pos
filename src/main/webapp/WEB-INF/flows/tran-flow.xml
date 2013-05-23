@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	
+	<var name="tranList" class="com.app.inv.model.TranList"/>
+	<var name="tranService" class="com.app.inv.service.TranService"/>
+	
+	<view-state id="chooseDate">
+		<transition on="submitDate" to="displayTran"/>
+		<transition on="cancel" to="cancel"/>
+		<on-exit>
+			<set name="flowScope.startDate" value="requestParameters.startDate"/>
+			<set name="flowScope.endDate" value="requestParameters.endDate"/>
+		</on-exit>
+	</view-state>
+	
+	<view-state id="displayTran" model="tranList">
+		<on-entry>
+			<evaluate result="tranList" expression="tranService.loadTran(startDate, endDate)"/>
+		</on-entry>
+		<transition on="printList" to="printList"/>
+		<transition on="cancel" to="cancel"/>
+	</view-state>
+	
+	<action-state id="printList">
+		<evaluate expression="tranService.printTran(tranList)"/>
+		<transition to="success"/>
+	</action-state>
+	
+	<view-state id="success">
+    	<transition on="new" to="end"/>
+    	<transition on="cancel" to="cancel"/>
+    </view-state>
+    
+    <end-state id="cancel" view="externalRedirect:/accounting/"/>
+    
+    <end-state id="end"/>
+    
+    <global-transitions>
+		<transition on="cancel" to="cancel"/>
+	</global-transitions>
+ </flow>

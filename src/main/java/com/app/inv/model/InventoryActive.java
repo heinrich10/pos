@@ -1,9 +1,14 @@
 package com.app.inv.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class InventoryActive extends Inventory {
+public class InventoryActive extends Inventory implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1057367550230251747L;
 	private Date stockDate;
     private Date roastDate;
     private Date expDate;

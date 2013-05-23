@@ -1,44 +1,39 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<%@ page session="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-	<title>Home</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="<c:url value = "/resources/design.css"/>"/>
+<title>Home</title>
+<base href="http://localhost:8080/inv/"/>
 </head>
 <body>
-<div id="container" style="width:1024px;text-align:center;"> 
-	<div id="header">
-		<h1>
-		
-		
-			Test
-		</h1>
-	</div>
-	
-	<div id="left" style="height:600px;width:20%;float:left;">
-		<b> Left Pane</b>
-	
-	</div>
-	
-	<div id="right" style="height:600px;width:80%;float:left;">
-		<b>The quick brown fox jumps over the lazy dog</b>
-		<button>Click Me!</button>
-		
-		<script>
-		// Get a handle on the first button element in the document.
-	    var button = document.querySelector( "button" );
-	    // If a user clicks on it, say hello!
-	    button.addEventListener( "click", function( ev ) {
-	        alert( "Hello" );
-	    }, false);
-		</script>
-	</div>
-	
-	<div id="bottom" style="height:100px;text-align:center;">
-		<P>  The time on the server is ${test}. </P>	
-	</div>
+<div id="icon">
+	<img src="<c:url value = "/resources/magnum_opus_logo.jpg"/>" width="200" height="200"
+    alt="Logo Here" />
 </div>
+<header>
+	<h1>Home Page</h1>
+</header>
 
-
+<%@ include file="/resources/navbar.jsp" %>
+<nav id="nav2">
+	<ul>
+		
+	</ul>
+</nav>
+	<article>
+		<h2>Home</h2>
+	</article>
+	<aside>
+		<h3>Options</h3>
+		<ul>
+		</ul>
+	</aside>				
+<%@ include file="/resources/footer.html" %>
 </body>
 </html>

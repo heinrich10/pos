@@ -1,37 +1,29 @@
 package com.app.inv.model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-public class OrderList {
-private List<MenuItem> arrMenuItem;
+public class OrderList implements Serializable{
+	
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4244742121633006674L;
+	private List<TranOrder> tranOrderList;
     
     public OrderList(){
-        
-        arrMenuItem = new ArrayList<MenuItem>();
+    	
+    }
+	
+	public OrderList(List<TranOrder> tranOrderList){
+        this.tranOrderList = tranOrderList;
+    }
+   
+    public List<TranOrder> getTranOrderList(){
+        return tranOrderList;
     }
     
-    public void addMenuItem(MenuItem menuItem){
-        arrMenuItem.add(menuItem);
-    }
-    
-    public void removeMenuItem(int index){
-        arrMenuItem.remove(index);
-    }
-    
-    public MenuItem getMenuItem(int index){
-        return arrMenuItem.get(index);
-    }
-    
-    public int size(){
-        return arrMenuItem.size();
-    }
-    
-    public void reset(){
-        arrMenuItem.clear();
-    }
-
-    public List<MenuItem> toArrayList(){
-        return arrMenuItem;
+    public void setTranOrderList(List<TranOrder> tranOrderList){
+    	this.tranOrderList = tranOrderList;
     }
 }

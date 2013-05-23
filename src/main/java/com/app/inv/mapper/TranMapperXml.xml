@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.inv.mapper.TranMapper">
+	<select id="loadTransaction" parameterType="String" resultType="Tran">
+		select
+		ot.code_transaction as codeTransaction,
+		ot.ind_dine_in as indDineIn,
+		(ot.recieved_amount - ot.change_amount) as totalAmount,
+		ot.time_stamp as timeStamp
+		from
+		oms_transaction ot
+		where
+		ot.create_date between date(#{param1}) and date(#{param2})
+	</select>
+	
+	<select id="loadTransactionOrder" parameterType="_long" resultType="TranOrder">
+		select
+		menu_item_name as menuItemName,
+		menu_item_price as menuItemPrice
+		from
+		oms_transaction_order
+		where
+		code_transaction = #{code}	
+	</select>
+	
+</mapper>

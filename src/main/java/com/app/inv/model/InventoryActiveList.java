@@ -1,9 +1,14 @@
 package com.app.inv.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class InventoryActiveList {
+public class InventoryActiveList implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1402950202025725184L;
 	private List<InventoryActive> inventoryList;
 	
 	public InventoryActiveList(){

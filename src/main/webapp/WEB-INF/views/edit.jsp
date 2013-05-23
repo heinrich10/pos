@@ -208,7 +208,6 @@
 			            <input type="submit" value="Accept" />
 			        </td>
 			    </tr>
-			    </tr>
 			</table>
 		</sf:form>
 	</c:when>
@@ -223,6 +222,34 @@
 				<tr>
 			        <td>Name:</td>
 			        <td><sf:input path="name" /></td>
+			    </tr>
+			    <tr>
+			        <td colspan="3">
+			            <input type="submit" value="Accept" />
+			        </td>
+			    </tr>
+			</table>
+		</sf:form>
+	</c:when>
+	
+	<c:when test="${editType == 'discount'}">
+		<sf:form method="post" commandName="discount" >
+			<table>
+				<tr>
+			        <td>Code:</td>
+			        <td><sf:input path="codeDiscount" /></td>
+			    </tr>
+				<tr>
+			        <td>Name:</td>
+			        <td><sf:input path="name" /></td>
+			    </tr>
+			    <tr>
+			        <td>Discount:</td>
+			        <td><sf:input path="discountFactor" /></td>
+			    </tr>
+			    <tr>
+			        <td>Vatable:</td>
+			        <td><sf:checkbox path="indVatable" /></td>
 			    </tr>
 			    <tr>
 			        <td colspan="3">

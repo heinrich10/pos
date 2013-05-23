@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.inv.mapper.DiscountMapper">
+   <select id = "loadDiscount" resultType="Discount">
+        select 
+        code_discount as codeDiscount, 
+        name, 
+        discount_factor as discountFactor, 
+        ind_vatable as indVatable 
+        from 
+        oms_discount
+    </select>
+    
+    <insert id="saveDiscount" parameterType="Discount">
+    	insert into
+    	oms_discount(
+    	create_date,
+    	update_date,
+    	update_user,
+    	update_program,
+    	code_discount,
+    	name,
+    	discount_factor,
+    	ind_vatable)
+    	values(
+    	sysdate(),
+    	sysdate(),
+    	"web",
+    	"DCService",
+    	#{codeDiscount},
+    	#{name},
+    	#{discountFactor},
+    	#{indVatable}) 
+    </insert>
+    
+    <delete id="deleteDiscount">
+    	delete
+    	from oms_discount
+    	where
+    	code_discount in
+    	<foreach item="item" index="index" collection="array"
+    		open="(" separator="," close=")">
+    		#{item}	
+    	</foreach>
+    </delete>
+</mapper>

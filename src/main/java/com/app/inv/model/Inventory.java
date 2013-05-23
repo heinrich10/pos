@@ -1,7 +1,13 @@
 package com.app.inv.model;
 
-public class Inventory {
+import java.io.Serializable;
 
+public class Inventory implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1364156537404136372L;
 	protected long itemNumber;
 	protected String name;
 	protected String codeIngredient;

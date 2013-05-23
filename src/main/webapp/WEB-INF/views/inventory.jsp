@@ -36,7 +36,7 @@ $(document).ready(function(){
   	});
 });
 </script>
-<base href="http://localhost:8080/inv/inventory/"/>
+<base href="http://localhost:8080/erp/inventory/"/>
 </head>
 <body>
 <div id="icon">
@@ -57,12 +57,10 @@ $(document).ready(function(){
 </nav>
 <c:choose>
 	<c:when test = "${model.tabletype == 'active'}">
-		
 		<article>
 			<a href="active">Refresh</a>
 			<h2>Inventory</h2>
 			<form id="select" action="test" method="post">
-			
 			<table>
 				<tr>
 					<th>Item Number</th>
@@ -86,21 +84,14 @@ $(document).ready(function(){
 						<td><c:out value="${prod.comment}" /></td>
 					</tr>
 				</c:forEach>
-				
 			</table>	
-			
 			</form>
-				
-				
-			
 		</article>
 		<aside>
 			<h3>Options</h3>
 			<ul>
 				<li><a href="pending"> View Orders </a></li>
 			</ul>
-			
-			
 		</aside>				
 	</c:when>
 		
@@ -109,7 +100,6 @@ $(document).ready(function(){
 			<a href="pending">Refresh</a>
 			<h2>Orders</h2>
 			<form id="select" method="post">
-			
 				<table>
 					<tr>
 						<th> </th>
@@ -132,7 +122,6 @@ $(document).ready(function(){
 						</tr>
 					</c:forEach>
 				</table>
-				<input type="submit" formaction="pending/delivered" formmethod="get" value="Delivered" />	
 				<input type="submit" formaction="pending/delete" value="Delete"/>
 			</form>
 		</article>
@@ -140,10 +129,8 @@ $(document).ready(function(){
 			<h3>Options</h3>
 			<ul>
 				<li><a href="pending/add">Add</a></li>
-				<li><a href="url">Delivered</a></li>
+				<li><a href="/erp/delivery-flow">Delivered</a></li>
 			</ul>
-			
-			
 		</aside>
 	</c:when>
 	
@@ -177,6 +164,7 @@ $(document).ready(function(){
 	
 	<c:when test="${tabletype == 'history'}">
 		<article>	
+			<a href="hist">Refresh</a>
 			<h2>Order History</h2>
 			<table>
 				<tr>

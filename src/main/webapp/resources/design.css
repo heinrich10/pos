@@ -2,7 +2,8 @@ body {
 	margin: 0 auto;
 	width:1024px;
 	background: #fff;
-
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Lucida Grande", Arial, sans-serif; ;
+	font-weight: 300;
 }
 
 header {
@@ -163,6 +164,7 @@ table td {
 	padding-right: 4px;
 	padding-left: 3px;
 	border-bottom: 1px solid #FC8626;
+	text-align: center;
 }
 
 table tr:hover {

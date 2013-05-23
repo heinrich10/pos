@@ -17,13 +17,13 @@
     alt="Logo Here" />
 </div>
 <header>
-	<h1> Maintenance </h1>
+	<h1> Accounting </h1>
 </header>
 <%@ include file="/resources/navbar.jsp" %>
 <nav id="nav2">
 	<ul>
 		<li><a href="transaction"> Transactions </a></li>
-		<li><a href="edo"> End of Day </a></li>
+		<li><a href="eod"> End of Day </a></li>
 	</ul>
 </nav>
 <c:choose>
@@ -35,22 +35,40 @@
 				<form>
 					<table>
 						<tr>
-							<th>Transaction Number</th>
+							<th>Tran #</th>
 							<th>Dine in</th>
 							<th>Amount</th>
-							<th>Change</th>
-							<th>Items</th>
-							<th>Time</th>
+							<th>Time Stamp</th>
+							<th>Items Ordered</th>
+							<th>Price</th>
 						</tr>
 						<c:forEach items="${tran}" var="tran">
 							<tr>
 								<td><c:out value="${tran.codeTransaction}" /></td>
 								<td><c:out value="${tran.indDineIn}" /></td>
-								<td><c:out value="${tran.recievedAmount}" /></td>
-								<td><c:out value="${tran.Change}" /></td>
-								<c:forEach items="${tran.orderList}" var="orderList">
-									<tr><c:out value="${orderList.menuItemName}"/></tr>
+								<td><c:out value="${tran.totalAmount}" /></td>
+								<td><c:out value="${tran.timeStamp }"/></td>
+								<c:forEach items="${tran.orderList.tranOrderList}" var="orderList" varStatus="status">
+									<c:choose>
+										<c:when test="${status.index > 0}">
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td><c:out value="${orderList.menuItemName}"/></td>
+												<td><c:out value="${orderList.menuItemPrice}"/></td>
+												<td></td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<td><c:out value="${orderList.menuItemName}"/></td>
+											<td><c:out value="${orderList.menuItemPrice}"/></td>
+										</c:otherwise>
+									</c:choose>
+									
 								</c:forEach>
+								
 							</tr>
 						</c:forEach>
 					</table>
@@ -67,6 +85,19 @@
 		</aside>
 	
 	</c:when>
+	
+	<c:otherwise>
+		<article>
+			<h2>Please choose action</h2>
+		</article>
+		<aside>
+			<h3>Options</h3>
+			<ul>
+				<li><a href="transaction">Transactions</a></li>
+				<li><a href="eod">End of Day</a></li>
+			</ul>
+		</aside>
+	</c:otherwise>
 
 
 </c:choose>

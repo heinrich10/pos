@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="<c:url value = "/resources/design.css"/>"/>
 <title>Insert title here</title>
-<base href="http://localhost:8080/inv/maintenance/"/>
+<base href="http://localhost:8080/erp/maintenance/"/>
 </head>
 <body>
 <div id="icon">
@@ -25,13 +25,14 @@
 		<li><a href="ingredient"> Ingredient </a></li>
 		<li><a href="mi"> Menu Item </a></li>
 		<li><a href="unit"> Unit </a></li>
+		<li><a href="discount"> Discount </a></li>
 	</ul>
 </nav>
 <c:choose>
 	<c:when test="${model.tabletype == 'ingredient'}">
 		<section>
 			<article>
-				<a href="mi"> Refresh </a>
+				<a href="ingredient"> Refresh </a>
 				<h2>Ingredient Maintenance</h2>
 				<form>
 					<table>
@@ -103,7 +104,7 @@
 			<h3>Options</h3>
 			<ul>
 				<li><a href="mi/type"> Menu Item Type </a></li>
-				<li><a href="/inv/recipe-flow"> Recipe </a></li>
+				<li><a href="/erp/recipe-flow"> Recipe </a></li>
 			</ul>
 		</aside>
 	</c:when>
@@ -111,7 +112,7 @@
 	<c:when test="${tabletype == 'menuItemEdit'}">
 		<section>
 			<article>
-				<a href="mi"> Refresh </a>
+				<a href="mi/edit"> Refresh </a>
 				<h2>Menu Item Maintenance</h2>
 				<sf:form method="post" modelAttribute="menuItem" >
 					<table>
@@ -144,7 +145,7 @@
 			<h3>Options</h3>
 			<ul>
 				<li><a href="mi/type"> Menu Item Type </a></li>
-				<li><a href="/recipe-flow"> Recipe </a></li>
+				<li><a href="/erp/recipe-flow"> Recipe </a></li>
 			</ul>
 		</aside>
 	</c:when>
@@ -186,7 +187,7 @@
 			<h3>Options</h3>
 			<ul>
 				<li><a href="mi/type"> Menu Item Type </a></li>
-				<li><a href="recipe"> Recipe </a></li>
+				<li><a href="/erp/recipe-flow"> Recipe </a></li>
 			</ul>
 		</aside>
 	</c:when>
@@ -194,6 +195,7 @@
 	<c:when test="${tabletype == 'ingredientType'}">
 		<section>
 			<article>
+				<a href="ingredient/type"> Refresh </a>
 				<h2>Ingredient Type</h2>
 				<form>
 					<table>
@@ -265,7 +267,7 @@
 	<c:when test="${model.tabletype == 'mitype'}">
 		<section>
 			<article>
-				<a href="unit"> Refresh </a>
+				<a href="mi/type"> Refresh </a>
 				<h2>Menu Item Maintenance</h2>
 				<form>
 					<table>
@@ -298,6 +300,46 @@
 		</aside>
 	</c:when>
 	
+	<c:when test="${tabletype == 'discount'}">
+		<section>
+			<article>
+				<a href="discount"> Refresh </a>
+				<h2>Discount Maintenance</h2>
+				<form>
+					<table>
+						<tr>
+							<th><input type ="checkbox"/></th>
+							<th>Code</th>
+							<th>Name</th>
+							<th>Discount Factor</th>
+							<th>Vatable</th>
+						</tr>
+						<c:forEach items="${discount}" var="prod">
+							<tr>
+								<td>
+									<input type = "checkbox" name = "codeDiscount" value = "${prod.codeDiscount}" />
+								</td>
+								<td><c:out value="${prod.codeDiscount}" /></td>
+								<td><c:out value="${prod.name}" /></td>
+								<td><c:out value="${prod.discountFactor}" /></td>
+								<td><c:out value="${prod.indVatable }"/></td>
+							</tr>
+						</c:forEach>
+					</table>
+					<button type="submit" formaction="discount/add">Add</button>
+					<input type="submit" formaction="discount/delete" formmethod="post" 
+					value="Delete" onClick="return confirm('Do you want to delete item number ${prod.name}?')"/>
+				</form>
+			</article>
+		</section>
+		<aside>
+			<h3>Options</h3>
+			<ul>
+			
+			</ul>
+		</aside>
+	</c:when>
+	
 	<c:otherwise>
 		<section>
 			<article>
@@ -310,6 +352,8 @@
 				<li><a href="ingredient"> Ingredient </a></li>
 				<li><a href="mi"> Menu Item </a></li>
 				<li><a href="unit"> Unit </a></li>
+				<li><a href="discount"> Discount </a></li>
+				
 			</ul>
 		</aside>
 	</c:otherwise>

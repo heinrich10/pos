@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	
+	<var name="inventoryActiveList" class="com.app.inv.model.InventoryActiveList"/>
+	<var name="inventoryDeliveredService" class="com.app.inv.service.InventoryDeliveredService" />
+	
+	<view-state id="chooseInventoryPending" model="inventoryPendingList" >
+		<on-entry>
+			<evaluate result="viewScope.inventoryPendingList" result-type="com.app.inv.model.InventoryPendingList"
+				expression="inventoryDeliveredService.loadInventoryPending()"/>
+		</on-entry>
+		<transition on="forDelivery" to="forDelivery"/>
+		<transition on="cancel" to="cancel"/>
+		<on-exit>
+			<set name="flowScope.itemNumber" value="requestParameters.itemNumber" type="long[]"/>
+		</on-exit>
+	</view-state>
+	
+	<view-state id="forDelivery" model="inventoryActiveList">
+		<on-entry>
+			<evaluate result="inventoryActiveList" expression="inventoryDeliveredService.forDelivery(itemNumber)"/>
+		</on-entry>
+		<transition on="delivered" to="delivered"/>
+		<transition on="cancel" to="cancel"/>
+	</view-state>
+	
+	<action-state id="delivered">
+		<evaluate expression="inventoryDeliveredService.delivered(inventoryActiveList, itemNumber)"/>
+		<transition to="success"/>
+	</action-state>
+	
+	<view-state id="success">
+    	<transition on="new" to="end"/>
+    	<transition on="cancel" to="cancel"/>
+    </view-state>
+    
+    <end-state id="cancel" view="externalRedirect:/inventory/active"/>
+    
+    <end-state id="end"/>
+    
+    <global-transitions>
+		<transition on="cancel" to="cancel"/>
+	</global-transitions>
+ </flow>
