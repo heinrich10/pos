@@ -22,19 +22,19 @@ import com.jcraft.jsch.UserInfo;
 @RequestMapping(value="/system")
 public class SystemController {
 	
-	@RequestMapping(value="/home", method=RequestMethod.GET)
+	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home(){
 		
 		return "system";
 	}
 	
-	@RequestMapping(value="/shutdown/", method=RequestMethod.GET)
+	@RequestMapping(value="/shutdown", method=RequestMethod.GET)
 	public ModelAndView shutdown(Map<String, Object> myModel){
 		myModel.put("option", "shutdown");
 		return new ModelAndView("system", myModel);
 	}
 	
-	@RequestMapping(value="/shutdown/", method=RequestMethod.POST)
+	@RequestMapping(value="/shutdown", method=RequestMethod.POST)
 	public void submitShutdown(JSch jsch){
 		
 		
@@ -97,7 +97,7 @@ public class SystemController {
             
 	}
 	
-	@RequestMapping(value="/parameters/", method=RequestMethod.GET)
+	@RequestMapping(value="/parameters", method=RequestMethod.GET)
 	public ModelAndView loadParameters(Map<String, Object> myModel){
 		
 		return new ModelAndView();

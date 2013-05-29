@@ -16,7 +16,7 @@ import com.app.inv.model.InventoryPending;
 import com.app.inv.model.InventoryPendingList;
 import com.app.inv.model.UnitAndPostUnit;
 
-public class InventoryDeliveredService implements Serializable {
+public class InventoryService implements Serializable {
 
 	/**
 	 * 
@@ -27,6 +27,10 @@ public class InventoryDeliveredService implements Serializable {
 	private transient InventoryMapper inventoryMapper;
 	@Inject
 	private transient UnitMapper unitMapper;
+	
+	public InventoryService(){
+		
+	}
 	
 	public InventoryPendingList loadInventoryPending(){
 		return new InventoryPendingList(inventoryMapper.loadInventoryPending());
@@ -64,5 +68,16 @@ public class InventoryDeliveredService implements Serializable {
 		inventoryMapper.saveToInventory(arrInventoryActive);
 		
 		inventoryMapper.deleteInventoryPending(itemNumber);	
+	}
+	
+	public InventoryActiveList loadInventory(){
+		return new InventoryActiveList(inventoryMapper.loadInventoryActive());
+		
+	}
+	
+	public void saveInventory(InventoryActiveList inventoryActiveList){
+		for(InventoryActive inventoryActive: inventoryActiveList.getInventoryList()){
+			inventoryMapper.updateInventoryActive(inventoryActive);
+		}
 	}
 }

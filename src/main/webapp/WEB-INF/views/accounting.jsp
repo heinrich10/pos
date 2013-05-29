@@ -22,8 +22,9 @@
 <%@ include file="/resources/navbar.jsp" %>
 <nav id="nav2">
 	<ul>
-		<li><a href="transaction"> Transactions </a></li>
-		<li><a href="eod"> End of Day </a></li>
+		<li><a href="/erp/tran-flow"> Transactions </a></li>
+		<li><a href="/erp/eod-flow"> End of Day </a></li>
+		<li><a href="/erp/eom-flow"> End of Month </a></li>
 	</ul>
 </nav>
 <c:choose>
@@ -93,8 +94,9 @@
 		<aside>
 			<h3>Options</h3>
 			<ul>
-				<li><a href="transaction">Transactions</a></li>
-				<li><a href="eod">End of Day</a></li>
+				<li><a href="/erp/tran-flow"> Transactions </a></li>
+				<li><a href="/erp/eod-flow"> End of Day </a></li>
+				<li><a href="/erp/eom-flow"> End of Month </a></li>
 			</ul>
 		</aside>
 	</c:otherwise>

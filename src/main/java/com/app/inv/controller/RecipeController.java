@@ -15,13 +15,13 @@ import com.app.inv.model.MenuItemList;
 import com.app.inv.model.Recipe;
 
 @Controller
-@RequestMapping("/maintenance/mi/")
+@RequestMapping("/maintenance/mi")
 public class RecipeController {
 	
 	@Inject
 	MenuItemMapper menuItemMapper;
 	
-	@RequestMapping(value = "recipe", method=RequestMethod.GET)
+	@RequestMapping(value = "/recipe", method=RequestMethod.GET)
 	public ModelAndView menuItemRecipe(
 			Map<String, Object> myMap,
 			MenuItemList menuItemList
@@ -35,7 +35,7 @@ public class RecipeController {
 		return new ModelAndView("maintenance", myMap);
 	}
 	
-	@RequestMapping(value="recipe/edit", method=RequestMethod.GET)
+	@RequestMapping(value="/recipe/edit", method=RequestMethod.GET)
 	public ModelAndView editRecipe(
 			@RequestParam("code") String code,
 			Map<String, Object> myMap,

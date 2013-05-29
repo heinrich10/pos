@@ -12,6 +12,8 @@ public interface InventoryMapper {
 	List<InventoryActive> loadInventoryActive(String codeIngredient);
 	    
 	List<InventoryActive> loadInventoryActive();
+	
+	void updateInventoryActive(InventoryActive inventoryActive);
 	  
 	List<InventoryPending> loadInventoryPending();
 	
@@ -29,5 +31,5 @@ public interface InventoryMapper {
 	    
 	void addPendingHist(List<InventoryPending> arrInventoryPending);
 	    
-	void updateInventory(long itemNumber, int quantity);
+	//void updateInventory(long itemNumber, int quantity);
 }

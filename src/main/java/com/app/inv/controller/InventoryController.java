@@ -55,7 +55,7 @@ public class InventoryController {
 	@Inject
 	private UnitMapper unitMapper;
 	
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(){
 		return "inventory";
 	}

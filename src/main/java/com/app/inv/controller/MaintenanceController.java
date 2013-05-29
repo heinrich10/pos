@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/maintenance")
 public class MaintenanceController {
 	
-	@RequestMapping(value = "/home")
+	@RequestMapping(value = "/")
 	public String mainPage(){
 		return "maintenance";
 	}

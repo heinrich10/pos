@@ -67,9 +67,9 @@
 	<bean id="dataSource"
        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
        	<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-    	<property name="url" value="jdbc:mysql://192.168.159.10:3306/MO"/>
-    	<property name="username" value="ricknb"/>
-    	<property name="password" value="asdf1234"/>
+    	<property name="url" value="jdbc:mysql://192.168.1.200:3306/mo"/>
+    	<property name="username" value="magnumopus"/>
+    	<property name="password" value="mo1234"/>
 	</bean>
 	
 	<!-- Define the SqlSessionFactory -->

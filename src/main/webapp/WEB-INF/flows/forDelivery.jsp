@@ -45,7 +45,9 @@ $(function() {
 					</tr>
 				</c:forEach>
 			</table>
-			<input type="submit" value="Accept" />
+			<input type="submit" name="_eventId_delivered" value="Accept" />
+			<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
+			<input type="submit" name="_eventId_cancel" value="Cancel"/>		
 		</sf:form>
 </body>
 </html>

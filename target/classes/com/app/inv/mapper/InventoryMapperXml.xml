@@ -217,16 +217,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         item_number = #{index}
     </delete>
     
-    <update id="updateInventory" parameterType="map">
+    <update id="updateInventoryActive" parameterType="InventoryActive">
         update 
         im_ingredient_inventory
         set 
         update_date = sysdate(), 
         update_user = "pgm", 
         update_program = "IPService", 
-        quantity = #{param2} 
+        quantity = #{quantity} 
         where 
-        item_number = #{param1}
+        item_number = #{itemNumber}
         
     </update>  
 </mapper>

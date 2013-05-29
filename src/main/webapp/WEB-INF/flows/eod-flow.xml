@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	
+	<var name="inventoryService" class="com.app.inv.service.InventoryService"/>
+	<var name="inventoryActiveList" class="com.app.inv.model.InventoryActiveList"/>
+	<var name="tranList" class="com.app.inv.model.TranList"/>
+	<var name="tranService" class="com.app.inv.service.TranService"/>
+	
+	<view-state id="consolidateInventory" model="inventoryActiveList">
+		<on-entry>
+			<evaluate result="inventoryActiveList" expression="inventoryService.loadInventory()"></evaluate>
+		</on-entry>
+		<transition on="consolidate" to="success"/>
+		<transition on="consolidateAndTran" to="tranflow"/>
+		<transition on="cancel" to="cancel"/>
+		<on-exit>
+			<evaluate expression="inventoryService.saveInventory(inventoryActiveList)"/>
+		</on-exit>
+	</view-state>
+	
+	<subflow-state id="tranflow" subflow="tran-flow">
+		<transition to="end"></transition>
+	</subflow-state>
+	
+	<view-state id="success">
+    	<transition on="new" to="end"/>
+    	<transition on="cancel" to="cancel"/>
+    </view-state>
+    
+    <end-state id="cancel" view="externalRedirect:/accounting/"/>
+    
+    <end-state id="end"/>
+    
+    <global-transitions>
+		<transition on="cancel" to="cancel"/>
+	</global-transitions>
+ </flow>

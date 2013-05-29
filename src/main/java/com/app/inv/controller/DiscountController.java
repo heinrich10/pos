@@ -22,7 +22,7 @@ public class DiscountController {
 	@Inject
 	private DiscountMapper discountMapper;
 	
-	@RequestMapping(value="/discount/", method=RequestMethod.GET)
+	@RequestMapping(value="/discount", method=RequestMethod.GET)
 	public ModelAndView loadDiscounts(Map<String, Object> myModel){
 		
 		List<Discount> discountList = discountMapper.loadDiscount();
@@ -55,6 +55,6 @@ public class DiscountController {
 		
 		discountMapper.deleteDiscount(codeDiscount);
 		
-		return "redirect:/maintenance/discount/";
+		return "redirect:/maintenance/discount";
 	}
 }
