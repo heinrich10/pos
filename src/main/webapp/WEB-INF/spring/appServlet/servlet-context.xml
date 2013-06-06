@@ -32,7 +32,7 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<!-- resources mapping="/resources/**" location="/resources/" /-->
-	<context:component-scan base-package="com.app.inv.controller" />
+	<context:component-scan base-package="com.app.erp.controller" />
 	
 	<mvc:resources mapping="/resources/**" 
 	location="/resources/" />
@@ -77,7 +77,7 @@
 	<!-- Define the SqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     	<property name="dataSource" ref="dataSource" />
-    	<property name="typeAliasesPackage" value="com.app.inv.model" />
+    	<property name="typeAliasesPackage" value="com.app.erp.model" />
         <property name="mapperLocations" value="classpath*:com/app/inv/mapper/*.xml"/>
     </bean>
     
@@ -88,41 +88,41 @@
 	
 
 	<bean id="inventoryMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.app.inv.mapper.InventoryMapper" />
+		<property name="mapperInterface" value="com.app.erp.mapper.InventoryMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
 	<bean id="ingredientMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.app.inv.mapper.IngredientMapper" />
+		<property name="mapperInterface" value="com.app.erp.mapper.IngredientMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
 	<bean id="unitMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.app.inv.mapper.UnitMapper" />
+		<property name="mapperInterface" value="com.app.erp.mapper.UnitMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
 	<bean id="menuItemMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.app.inv.mapper.MenuItemMapper" />
+		<property name="mapperInterface" value="com.app.erp.mapper.MenuItemMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
 	<bean id="tranMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.app.inv.mapper.TranMapper" />
+		<property name="mapperInterface" value="com.app.erp.mapper.TranMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
 	<bean id="recipeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.app.inv.mapper.RecipeMapper" />
+		<property name="mapperInterface" value="com.app.erp.mapper.RecipeMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
 	<bean id="discountMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.app.inv.mapper.DiscountMapper" />
+		<property name="mapperInterface" value="com.app.erp.mapper.DiscountMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
-	<bean id="inventoryValidator" class="com.app.inv.validator.InventoryValidator">
+	<bean id="inventoryValidator" class="com.app.erp.validator.InventoryValidator">
 	</bean>
 	
 	<!-- bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
