@@ -92,6 +92,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{name})
     </insert>
     
+    <select id="loadIngredientLink" parameterType="String" resultType="IngredientLink">
+    	select
+    	item_number as link1,
+    	item_number2 as link2
+    	from
+    	core_inventory_ingredient
+    	where
+    	code_ingredient = #{codeIngredient}
+    </select>
+    
     <select id = "loadIngredientLinkOne" parameterType="String" resultMap="loadIngredientLinkResultMap">
         SELECT 
         III.item_number, 
@@ -164,7 +174,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     
     
-    <insert id="saveInventoryLink" parameterType="hashmap">
+    <insert id="saveIngredientLink" parameterType="IngredientLink">
         insert into 
         core_inventory_ingredient(
         create_date, 
@@ -179,13 +189,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         sysdate(), 
         "pgm", 
         "ICService",
-        #{1},
-        #{2},
-        #{3})
+        #{codeIngredient},
+        #{link1},
+        #{link2})
         on duplicate key update 
         update_date = sysdate(), 
-        item_number = #{2}, 
-        item_number2 = #{3}
+        item_number = #{link1}, 
+        item_number2 = #{link2}
     </insert>
 </mapper>
 

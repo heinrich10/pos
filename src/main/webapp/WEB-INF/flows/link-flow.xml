@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	
+	<var name="ingredientCodeList" class="com.app.inv.model.IngredientCodeList"/>
+	<var name="ingredientService" class="com.app.inv.service.IngredientService" />
+	<var name="inventoryActiveList" class="com.app.inv.model.InventoryActiveList"/>
+	<var name="inventoryService" class="com.app.inv.service.InventoryService"/>
+	<var name="ingredientLink" class="com.app.inv.model.IngredientLink"/>
+	
+	<view-state id="chooseIngredientToLink" model="IngredientCodeList" >
+		<on-entry>
+			<evaluate result="ingredientCodeList" expression="ingredientService.loadIngredientCode()"/>
+		</on-entry>
+		<transition on="linkIngredient" to="linkIngredient"/>
+		<transition on="cancel" to="cancel"/>
+		<on-exit>
+			<set name="ingredientLink" value="ingredientService.loadIngredientLink(requestParameters.code)"/>
+		</on-exit>
+	</view-state>
+	
+	<view-state id="linkIngredient" model="ingredientLink">
+		<on-entry>
+			<evaluate result="inventoryActiveList" expression="inventoryService.loadInventory(ingredientLink.getCodeIngredient())"/>
+		</on-entry>
+		<transition on="save" to="save"/>
+		<transition on="cancel" to="cancel"/>
+		<on-exit>
+			<evaluate expression="ingredientService.validate(ingredientLink)"/>
+		</on-exit>
+	</view-state>
+	
+	<action-state id="save">
+		<evaluate expression="ingredientService.saveIngredientLink(ingredientLink)"/>
+		<transition to="success"/>
+	</action-state>
+	
+	<view-state id="success">
+    	<transition on="new" to="end"/>
+    	<transition on="cancel" to="cancel"/>
+    </view-state>
+    
+    <end-state id="cancel" view="externalRedirect:/maintenance/ingredient"/>
+    
+    <end-state id="end"/>
+    
+    <global-transitions>
+		<transition on="cancel" to="cancel"/>
+	</global-transitions>
+ </flow>

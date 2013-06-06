@@ -72,7 +72,10 @@ public class InventoryService implements Serializable {
 	
 	public InventoryActiveList loadInventory(){
 		return new InventoryActiveList(inventoryMapper.loadInventoryActive());
-		
+	}
+	
+	public InventoryActiveList loadInventory(String code){
+		return new InventoryActiveList(inventoryMapper.loadInventoryActive(code));
 	}
 	
 	public void saveInventory(InventoryActiveList inventoryActiveList){

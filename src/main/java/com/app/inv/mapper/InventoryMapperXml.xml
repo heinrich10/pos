@@ -30,9 +30,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON
 		III.code_unit = CU.code_unit
 		
+		<if test="_parameter != null">
+			where IIC.code = #{codeIngredient}
+		</if>
+		
 		order by
         III.item_number
-
+		
+		
 	</select>
 	
 	<select id = "loadInventoryPending" resultType="InventoryPending">

@@ -22,6 +22,8 @@
 		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 		http://www.springframework.org/schema/webflow-config
 		http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">
+		
+		
 	
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -138,4 +140,5 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     	<property name="dataSource" ref="dataSource"/>
 	</bean>
+	
 </beans>

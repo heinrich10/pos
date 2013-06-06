@@ -66,6 +66,7 @@
 					        <td>Post Unit:</td>
 					        <td>
 					        	<sf:select path="codePostUnit" >
+					        		<sf:option value="" label="-- none --"/>
 					        		<sf:options items="${unit}" itemLabel="name" itemValue="codeUnit"/>
 					        	</sf:select>
 					        </td>
@@ -96,6 +97,7 @@
 					        <td>Post Unit:</td>
 					        <td>
 					        	<sf:select path="codePostUnit" >
+					        		<sf:option value="" label="-- none --"/>
 					        		<sf:options items="${unit}" itemLabel="name" itemValue="codeUnit"/>
 					        	</sf:select>
 					        </td>

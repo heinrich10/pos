@@ -64,6 +64,7 @@
 			<h3>Options</h3>
 			<ul>
 				<li><a href="ingredient/type"> Ingredient Type </a></li>
+				<li><a href="/erp/link-flow">Link Inventory</a>
 			</ul>
 		</aside>
 	</c:when>
