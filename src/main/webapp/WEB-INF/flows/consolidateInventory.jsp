@@ -37,7 +37,6 @@
 		</c:forEach>
 	</table>
 	<input type="submit"  name="_eventId_consolidate" value="Consolidate" />
-	<input type="submit"  name="_eventId_consolidateAndTran" value="Consolidate And View Transactions" />
 	<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
 	<input type="submit" name="_eventId_cancel" value="Cancel"/>
 </sf:form>

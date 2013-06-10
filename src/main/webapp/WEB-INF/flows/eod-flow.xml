@@ -5,30 +5,30 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
 	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
-	<var name="inventoryService" class="com.app.inv.service.InventoryService"/>
-	<var name="inventoryActiveList" class="com.app.inv.model.InventoryActiveList"/>
-	<var name="tranList" class="com.app.inv.model.TranList"/>
-	<var name="tranService" class="com.app.inv.service.TranService"/>
+	<var name="inventoryService" class="com.app.erp.service.InventoryService"/>
+	<var name="inventoryActiveList" class="com.app.erp.model.InventoryActiveList"/>
+	<var name="tranList" class="com.app.erp.model.TranList"/>
+	<var name="tranService" class="com.app.erp.service.TranService"/>
 	
 	<view-state id="consolidateInventory" model="inventoryActiveList">
 		<on-entry>
 			<evaluate result="inventoryActiveList" expression="inventoryService.loadInventory()"></evaluate>
 		</on-entry>
-		<transition on="consolidate" to="success"/>
-		<transition on="consolidateAndTran" to="tranflow"/>
-		<transition on="cancel" to="cancel"/>
-		<on-exit>
-			<evaluate expression="inventoryService.saveInventory(inventoryActiveList)"/>
-		</on-exit>
+		<transition on="consolidate" to="consolidate"/>
 	</view-state>
 	
+	<action-state id="consolidate">
+		<evaluate expression="inventoryService.consolidateInventory(inventoryActiveList)"/>
+		<transition to="tranflow"/>
+	</action-state>
+	
 	<subflow-state id="tranflow" subflow="tran-flow">
-		<transition to="end"></transition>
+		<input name="subflow" value="true"/>
+		<transition to="success"/>
 	</subflow-state>
 	
 	<view-state id="success">
-    	<transition on="new" to="end"/>
-    	<transition on="cancel" to="cancel"/>
+    	<transition on="end" to="end"/>
     </view-state>
     
     <end-state id="cancel" view="externalRedirect:/accounting/"/>

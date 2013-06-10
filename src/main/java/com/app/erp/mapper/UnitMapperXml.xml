@@ -3,8 +3,8 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.app.inv.mapper.UnitMapper">
-	<select id="loadUnit" resultType="com.app.inv.model.Unit">
+<mapper namespace="com.app.erp.mapper.UnitMapper">
+	<select id="loadUnit" resultType="Unit">
 		select  
 		code_unit as codeUnit, 
 		name 
@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		core_units	
 	</select>
 	
-	<select id="loadUnitAndPostUnit" resultType="com.app.inv.model.UnitAndPostUnit" parameterType="String">
+	<select id="loadUnitAndPostUnit" resultType="UnitAndPostUnit" parameterType="String">
 		select
 		cu.code_unit as codeUnit, 
 		cu.name,
@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 
 	</select>
 	
-	<insert id="saveUnit" parameterType="com.app.inv.model.UnitAndPostUnit">
+	<insert id="saveUnit" parameterType="UnitAndPostUnit">
 		insert into 
         core_units(
         create_date,
@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{conversionFactor})
 	</insert>
 	
-	<update id="updateUnit" parameterType="com.app.inv.model.UnitAndPostUnit">
+	<update id="updateUnit" parameterType="UnitAndPostUnit">
 		update 
         core_units
         SET 

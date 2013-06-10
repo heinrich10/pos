@@ -78,9 +78,15 @@ public class InventoryService implements Serializable {
 		return new InventoryActiveList(inventoryMapper.loadInventoryActive(code));
 	}
 	
-	public void saveInventory(InventoryActiveList inventoryActiveList){
+	@Transactional
+	public void consolidateInventory(InventoryActiveList inventoryActiveList){
+		
 		for(InventoryActive inventoryActive: inventoryActiveList.getInventoryList()){
+			if(inventoryActive.getQuantity() == 0){
+				inventoryMapper.deleteInventory(inventoryActive.getItemNumber());
+			}
 			inventoryMapper.updateInventoryActive(inventoryActive);
 		}
 	}
+
 }

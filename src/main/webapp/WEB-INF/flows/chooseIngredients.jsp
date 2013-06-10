@@ -35,6 +35,7 @@
 		</table>
 		<input type="submit"  name="_eventId_submitIngredients" value="Accept" />
 		<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
+		<input type="submit" name="_eventId_end" value="Start Over"/>
 		<input type="submit" name="_eventId_cancel" value="Cancel"/>
 	</sf:form>
 	

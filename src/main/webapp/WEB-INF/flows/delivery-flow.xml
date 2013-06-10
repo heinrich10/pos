@@ -5,19 +5,17 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
 	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
-	<var name="inventoryActiveList" class="com.app.inv.model.InventoryActiveList"/>
-	<var name="inventoryService" class="com.app.inv.service.InventoryService" />
+	<var name="inventoryActiveList" class="com.app.erp.model.InventoryActiveList"/>
+	<var name="inventoryService" class="com.app.erp.service.InventoryService" />
 	
 	<view-state id="chooseInventoryPending" model="inventoryPendingList" >
 		<on-entry>
-			<evaluate result="viewScope.inventoryPendingList" result-type="com.app.inv.model.InventoryPendingList"
+			<evaluate result="viewScope.inventoryPendingList" result-type="com.app.erp.model.InventoryPendingList"
 				expression="inventoryService.loadInventoryPending()"/>
 		</on-entry>
-		<transition on="forDelivery" to="forDelivery"/>
-		<transition on="cancel" to="cancel"/>
-		<on-exit>
+		<transition on="forDelivery" to="forDelivery">
 			<set name="flowScope.itemNumber" value="requestParameters.itemNumber" type="long[]"/>
-		</on-exit>
+		</transition>
 	</view-state>
 	
 	<view-state id="forDelivery" model="inventoryActiveList">
@@ -25,7 +23,6 @@
 			<evaluate result="inventoryActiveList" expression="inventoryService.forDelivery(itemNumber)"/>
 		</on-entry>
 		<transition on="delivered" to="delivered"/>
-		<transition on="cancel" to="cancel"/>
 	</view-state>
 	
 	<action-state id="delivered">
@@ -34,8 +31,7 @@
 	</action-state>
 	
 	<view-state id="success">
-    	<transition on="new" to="end"/>
-    	<transition on="cancel" to="cancel"/>
+    	<transition on="end" to="end"/>
     </view-state>
     
     <end-state id="cancel" view="externalRedirect:/inventory/active"/>

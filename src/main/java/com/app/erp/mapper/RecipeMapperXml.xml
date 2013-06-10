@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.app.inv.mapper.RecipeMapper">
+<mapper namespace="com.app.erp.mapper.RecipeMapper">
    <select id = "loadRecipe" resultType="Ingredient" parameterType="string">
         select 
         OMR.code_menu as codeMenu,

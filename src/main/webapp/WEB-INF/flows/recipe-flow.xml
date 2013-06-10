@@ -5,33 +5,26 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
 	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
-	<var name="ingredientCodeRecipeList" class="com.app.inv.model.IngredientCodeRecipeList"/>
-	<var name="recipe" class="com.app.inv.model.Recipe"/>
-	<var name="recipeService" class="com.app.inv.service.RecipeService"/>
+	<var name="ingredientCodeRecipeList" class="com.app.erp.model.IngredientCodeRecipeList"/>
+	<var name="recipe" class="com.app.erp.model.Recipe"/>
+	<var name="recipeService" class="com.app.erp.service.RecipeService"/>
 
 	<view-state id="chooseMenuItem" model="menuItemList">
 		<on-entry>
-			<evaluate result="flowScope.menuItemList" expression="recipeService.loadMenuItemList()"/>
+			<evaluate result="viewScope.menuItemList" result-type="com.app.erp.model.MenuItemList" 
+			expression="recipeService.loadMenuItemList()"/>
 		</on-entry>
-		<transition on="submitMenuItem" to="chooseIngredients"/>
-        <transition on="cancel" to="cancel"/>
-        <on-exit>
+		<transition on="submitMenuItem" to="chooseIngredients">
 			<set name="flowScope.codeMenu" value = "requestParameters.code"/>
-		</on-exit>
-	</view-state>
+		</transition>
+    </view-state>
 	
 	<view-state id="chooseIngredients" model="ingredientCodeRecipeList">
 		<on-entry>
 			<evaluate result="ingredientCodeRecipeList" expression="recipeService.loadIngredientCode(codeMenu)"/>
 		</on-entry>
 	    <transition on="submitIngredients" to="ingredientValues"/>
-        <transition on="cancel" to="end"/>
-    </view-state>
-    
-    <action-state id="forIngredientValue">
-    	<evaluate result="recipe" expression="recipeService.forIngredientValue(ingredientCodeRecipeList, codeMenu)"/>
-    	<transition to="ingredientValues"/>
-    </action-state>
+	</view-state>
     
     <view-state id="ingredientValues" model="recipe" >
     	<on-entry>
@@ -39,7 +32,6 @@
     		<evaluate result="viewScope.unit" expression="recipeService.getUnits()"></evaluate>
     	</on-entry>
     	<transition on="submitValues" to="saveRecipe"/>
-    	<transition on="cancel" to="end"/>
     </view-state>
     
     <action-state id="saveRecipe">
@@ -47,10 +39,9 @@
     	<transition to="success"/>
     </action-state>
     
-    <view-state id="success">
-    	<transition on="new" to="end"/>
-    	<transition on="cancel" to="cancel"/>
-    </view-state>
+    <view-state id="success"/>
+    	
+    
     
     <end-state id="cancel" view="externalRedirect:/maintenance/mi"/>
     
@@ -58,5 +49,6 @@
     
     <global-transitions>
 		<transition on="cancel" to="cancel"/>
+		<transition on="end" to="end"/>
 	</global-transitions>
  </flow>

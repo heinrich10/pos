@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.app.inv.mapper.MenuItemMapper">
+<mapper namespace="com.app.erp.mapper.MenuItemMapper">
 	
 	<select id="loadMenuItem" resultType="MenuItem">
 		select
@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
 	</select>
 	
-	<insert id="saveMenuItemType" parameterType="com.app.inv.model.MenuItemType">
+	<insert id="saveMenuItemType" parameterType="MenuItemType">
 		insert into
 		oms_mi_type(
 		create_date,
@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{name})
     </insert>
     
-    <update id="updateMenuItemType" parameterType="com.app.inv.model.MenuItemType">
+    <update id="updateMenuItemType" parameterType="MenuItemType">
     	update
 		oms_mi_type
 		set

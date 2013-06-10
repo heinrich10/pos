@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Choose Ingredient Values</title>
 </head>
 <body>
 <h2>Choose Ingredient Values</h2>
@@ -44,6 +44,7 @@
 		
 		<input type="submit"  name="_eventId_submitValues" value="Accept" />
 		<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
+		<input type="submit" name="_eventId_end" value="Start Over"/>
 		<input type="submit" name="_eventId_cancel" value="Cancel"/>
 	</sf:form>
 </body>

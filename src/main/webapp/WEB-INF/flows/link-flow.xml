@@ -5,32 +5,28 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
 	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
-	<var name="ingredientCodeList" class="com.app.inv.model.IngredientCodeList"/>
-	<var name="ingredientService" class="com.app.inv.service.IngredientService" />
-	<var name="inventoryActiveList" class="com.app.inv.model.InventoryActiveList"/>
-	<var name="inventoryService" class="com.app.inv.service.InventoryService"/>
-	<var name="ingredientLink" class="com.app.inv.model.IngredientLink"/>
+	<var name="ingredientService" class="com.app.erp.service.IngredientService" />
+	<var name="inventoryActiveList" class="com.app.erp.model.InventoryActiveList"/>
+	<var name="inventoryService" class="com.app.erp.service.InventoryService"/>
+	<var name="ingredientLink" class="com.app.erp.model.IngredientLink"/>
 	
 	<view-state id="chooseIngredientToLink" model="IngredientCodeList" >
 		<on-entry>
-			<evaluate result="ingredientCodeList" expression="ingredientService.loadIngredientCode()"/>
+			<evaluate result="viewScope.ingredientCodeList" result-type="com.app.erp.model.IngredientCodeList" 
+			expression="ingredientService.loadIngredientCode()"/>
 		</on-entry>
-		<transition on="linkIngredient" to="linkIngredient"/>
-		<transition on="cancel" to="cancel"/>
-		<on-exit>
+		<transition on="linkIngredient" to="linkIngredient">
 			<set name="ingredientLink" value="ingredientService.loadIngredientLink(requestParameters.code)"/>
-		</on-exit>
+		</transition>
 	</view-state>
 	
 	<view-state id="linkIngredient" model="ingredientLink">
 		<on-entry>
 			<evaluate result="inventoryActiveList" expression="inventoryService.loadInventory(ingredientLink.getCodeIngredient())"/>
 		</on-entry>
-		<transition on="save" to="save"/>
-		<transition on="cancel" to="cancel"/>
-		<on-exit>
+		<transition on="save" to="save">
 			<evaluate expression="ingredientService.validate(ingredientLink)"/>
-		</on-exit>
+		</transition>
 	</view-state>
 	
 	<action-state id="save">
@@ -39,8 +35,7 @@
 	</action-state>
 	
 	<view-state id="success">
-    	<transition on="new" to="end"/>
-    	<transition on="cancel" to="cancel"/>
+    	<transition on="end" to="end"/>
     </view-state>
     
     <end-state id="cancel" view="externalRedirect:/maintenance/ingredient"/>

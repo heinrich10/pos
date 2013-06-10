@@ -39,8 +39,8 @@ $(function() {
 						<td><c:out value="${inventoryList.name}" /></td>
 						<td><c:out value="${inventoryList.quantity}" /></td>
 						<td><c:out value="${inventoryList.unit}" /></td>
-						<td><sf:input path="inventoryList[${status.index}].roastDate" class="date"/></td>
-						<td><sf:input path="inventoryList[${status.index}].expDate" class="date" /></td>
+						<td><sf:input path="inventoryList[${status.index}].roastDate" cssClass="date"/></td>
+						<td><sf:input path="inventoryList[${status.index}].expDate" cssClass="date" /></td>
 						<td><sf:input path="inventoryList[${status.index}].comment" /></td>
 					</tr>
 				</c:forEach>

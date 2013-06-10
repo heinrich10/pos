@@ -33,7 +33,6 @@
 					<input type="submit"  name="_eventId_submitMenuItem" value="Edit" />
 					<input type="hidden" name="code" value="${menuItemList.code}"/>
 					<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
-					<input type="submit" name="_eventId_cancel" value="Cancel"/>
 				</sf:form>
 			</td>
 		</tr>

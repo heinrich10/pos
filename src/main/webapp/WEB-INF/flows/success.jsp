@@ -10,7 +10,7 @@
 <body>
 	Operation Successful
 	<sf:form>
-		<input type="submit" name="_eventId_new" value="Start Over" id="input"/>
+		<input type="submit" name="_eventId_end" value="Start Over" id="input"/>
 		<input type="submit" name="_eventId_cancel" value="Ok" id="input"/>
 	</sf:form>
 </body>
