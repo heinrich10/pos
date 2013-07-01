@@ -50,7 +50,7 @@ public class InventoryService implements Serializable {
 	@Transactional
 	public void delivered(InventoryActiveList inventoryActiveList, long[] itemNumber){
 		
-		List<InventoryActive> arrInventoryActive = (ArrayList<InventoryActive>) inventoryActiveList.getInventoryList();
+		List<InventoryActive> arrInventoryActive = inventoryActiveList.getInventoryList();
 		
 		List<InventoryPending> arrInventoryPending = inventoryMapper.loadInventoryPendingList(itemNumber);
 		
@@ -58,9 +58,14 @@ public class InventoryService implements Serializable {
 			InventoryActive inventoryActive = arrInventoryActive.get(i);
 			inventoryActive.setInventory(arrInventoryPending.get(i));
 			UnitAndPostUnit unitAndPostUnit = unitMapper.loadUnitAndPostUnit(inventoryActive.getUnitCode());
-			inventoryActive.setUnitCode(unitAndPostUnit.getCodePostUnit());
-			int quantity = (int) (inventoryActive.getQuantity() * unitAndPostUnit.getConversionFactor());
-			inventoryActive.setQuantity(quantity);
+			String codePostUnit = unitAndPostUnit.getCodePostUnit();
+			if(!codePostUnit.isEmpty()){
+				inventoryActive.setUnitCode(codePostUnit);
+				int quantity = (int) (inventoryActive.getQuantity() * unitAndPostUnit.getConversionFactor());
+				inventoryActive.setQuantity(quantity);
+				double unitPrice = inventoryActive.getUnitPrice() / unitAndPostUnit.getConversionFactor();
+				inventoryActive.setUnitPrice(unitPrice);
+			}
 		}
 		
 		inventoryMapper.addPendingHist(arrInventoryPending);

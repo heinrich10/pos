@@ -17,5 +17,8 @@ public interface UnitMapper {
 	
 	void updateUnit(UnitAndPostUnit unitAndPostUnit);
 	
-	void deleteUnit(String codeUnit);
+	int allowDeletion(String codeUnit);
+	
+	void deleteUnit(String[] codeUnit);
+		
 }

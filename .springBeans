@@ -8,6 +8,7 @@
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
 		<config>src/main/webapp/WEB-INF/spring/spring-security.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/magnumopus-context.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

@@ -9,13 +9,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         IIC.code,
         IIC.brand, 
         IIC.name,
-        IIC.type as typeCode, 
+        IIC.code_type as typeCode, 
         IIT.name as type 
         FROM 
         im_ingredient_code IIC 
         JOIN 
         im_ingredient_type IIT
-        ON IIC.type = IIT.code 
+        ON IIC.code_type = IIT.code 
         order by 
         IIC.code
     </select>
@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         code, 
         brand, 
         name,
-        type) 
+        code_type) 
         values (
         sysdate(),
         sysdate(), 
@@ -41,6 +41,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{name}, 
         #{typeCode})
     </insert>
+    
+    <select id="allowDeletionOfIngredient" parameterType="String" resultType="_int">
+    	select
+		((select 
+		count(code_ingredient) 
+		from 
+		im_ingredient_inventory 
+		where 
+		code_ingredient = #{codeIngredient})  
+		+ 
+		(select 
+		count(code_unit) 
+		from 
+		im_ingredient_pending
+		where
+		code_ingredient = #{codeIngredient})) as count
+		from
+		dual
+    </select>
     
     <delete id="deleteIngredientCode">
         delete
@@ -60,6 +79,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         name 
         FROM 
         im_ingredient_type
+    </select>
+    
+    <select id="allowDeletionOfIngredientType" parameterType="String" resultType="_int">
+    	select
+		count(code_type)
+		from
+		im_ingredient_code
+		where
+		code_type = #{code}
     </select>
     
     <delete id="deleteIngredientType">

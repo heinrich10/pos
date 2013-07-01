@@ -3,12 +3,15 @@ package com.app.erp.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class MenuItemList implements Serializable {
+import javax.validation.Valid;
+
+public class MenuItemList implements Serializable{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3432964268685210189L;
+	@Valid
 	private List<MenuItem> menuItemList;
 	
 	public MenuItemList(){

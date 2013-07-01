@@ -87,6 +87,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		code = #{code}
     </update>
     
+    <select id="allowDeletion" parameterType="String" resultType="_int">
+    	select
+    	count(code)
+    	from
+    	oms_menu_item
+    	where
+    	type = #{code}
+    </select>
+    
     <delete id="deleteMenuItemType">
     	delete from 
         oms_mi_type 

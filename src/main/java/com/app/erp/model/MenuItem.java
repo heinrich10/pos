@@ -2,6 +2,9 @@ package com.app.erp.model;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 public class MenuItem implements Serializable{
 	/**
 	 * 
@@ -9,8 +12,11 @@ public class MenuItem implements Serializable{
 	private static final long serialVersionUID = -7976731707644029073L;
 	private String code;
     private String type;
+    @Size(min=1, max=25)
     private String name;
+    @Size(min=1, max=100)
     private String description;
+    @Min(0)
     private double price;
     private String typeCode;
     private double recipePrice;

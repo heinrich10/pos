@@ -2,6 +2,10 @@ package com.app.erp.model;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+
 public class Inventory implements Serializable{
 
 	/**
@@ -11,9 +15,11 @@ public class Inventory implements Serializable{
 	protected long itemNumber;
 	protected String name;
 	protected String codeIngredient;
+	@Min(1)
 	protected int quantity;
 	protected double unitPrice;
 	protected String unit;
+	@NotNull
 	protected String unitCode;
 	protected double totalPrice;
     

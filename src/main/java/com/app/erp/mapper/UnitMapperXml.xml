@@ -68,11 +68,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         code_unit = #{codeUnit}
 	</update>
 	
+	<select id="allowDeletion" parameterType="String" resultType="_int">
+    	select
+		((select 
+		count(code_unit) 
+		from 
+		im_ingredient_inventory 
+		where 
+		code_unit = #{codeUnit})  
+		+ 
+		(select 
+		count(code_unit) 
+		from 
+		im_ingredient_pending
+		where
+		code_unit = #{codeUnit})) as count
+		from
+		dual
+    </select>
+	
 	<delete id="deleteUnit" parameterType="String">
 		delete from 
         core_units 
         where 
-        code_unit = #{codeUnit}
+        code_unit in
+        <foreach item="item" index="index" collection="array"
+        	open="(" separator="," close=")">
+			#{item}
+		</foreach>
 	</delete>
 </mapper>
 

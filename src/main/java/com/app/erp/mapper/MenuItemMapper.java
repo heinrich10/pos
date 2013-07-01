@@ -23,6 +23,8 @@ public interface MenuItemMapper {
 	
 	void updateMenuItemType(MenuItemType menuItemType);
 	
+	int allowDeletion(String code);
+	
 	void deleteMenuItemType(String[] code);
 	
 	

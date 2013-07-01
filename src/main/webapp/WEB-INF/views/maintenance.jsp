@@ -58,6 +58,7 @@
 					<button type="submit" formaction="ingredient/add">Add</button>
 					<input type="submit" formaction="ingredient/delete" formmethod="post" value="Delete"/>
 				</form>
+				<h5>${model.errorMsg}</h5>
 			</article>
 		</section>
 		<aside>
@@ -115,7 +116,7 @@
 			<article>
 				<a href="mi/edit"> Refresh </a>
 				<h2>Menu Item Maintenance</h2>
-				<sf:form method="post" modelAttribute="menuItem" >
+				<sf:form method="post" modelAttribute="menuItemList" >
 					<table>
 						<tr>
 							<th>Recipe Code</th>
@@ -124,8 +125,9 @@
 							<th>Description</th>
 							<th>Price</th>
 						</tr>
-						<c:forEach items="${menuItem.menuItemList}" var="menuItemList" varStatus="status">
+						<c:forEach items="${menuItemList.menuItemList}" var="menuItemList" varStatus="status">
 							<tr>
+							
 								<td><sf:input path="menuItemList[${status.index}].code" readonly="true"/></td>
 								<td>	
 									<sf:select path="menuItemList[${status.index}].typeCode" >
@@ -139,6 +141,9 @@
 						</c:forEach>
 					</table>
 					<input type="submit" value="Accept" />
+					<h5>
+						<sf:errors path="*" cssClass="error"></sf:errors>
+					</h5>
 				</sf:form>
 			</article>
 		</section>
@@ -218,6 +223,7 @@
 					<button type="submit" formaction="ingredient/type/add">Add</button>
 					<input type="submit" formaction="ingredient/type/delete" formmethod="post" value="Delete"/>
 				</form>
+				<h5>${errorMsg}</h5>
 			</article>
 		</section>
 		<aside>
@@ -255,6 +261,7 @@
 					<button type="submit" formaction="unit/add">Add</button>
 					<input type="submit" formaction="unit/delete" formmethod="post" value="Delete"/>
 				</form>
+				<h5>${model.errorMsg}</h5>
 			</article>
 		</section>
 		<aside>
@@ -289,8 +296,11 @@
 					</table>
 					<button type="submit" formaction="mi/type/add">Add</button>
 					<input type="submit" formaction="mi/type/delete" formmethod="post" 
-					value="Delete" onClick="return confirm('Do you want to delete item number ${prod.name}?')"/>
+					value="Delete"/>
+					
+					
 				</form>
+				<h5>${model.errorMsg}</h5>
 			</article>
 		</section>
 		<aside>

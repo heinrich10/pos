@@ -5,6 +5,6 @@
 		<li><a href=<c:url value="/maintenance/"></c:url>>Maintenance</a></li>
 		<li><a href="<c:url value="/accounting/"/>">Accounting</a></li>
 		<li><a href="<c:url value="/system/"/>">System</a></li>
-		<li><a href="#">Log out</a></li>
+		<li><a href="<c:url value="/j_spring_security_logout"/>">Log out</a></li>
 	</ul>
 </nav>

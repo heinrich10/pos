@@ -1,11 +1,18 @@
 package com.app.erp.model;
 
-public class Discount {
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Range;
+
+public class Discount {
+	
+	@Size(min=1, max=10)
     private String codeDiscount;
+	@Size(min=1, max=45)
     private String name;
+	@Range(min=0, max=1)
     private double discountFactor;
-    private boolean indVatable;
+    private boolean indVatable = true;
     
     public Discount(){
     	

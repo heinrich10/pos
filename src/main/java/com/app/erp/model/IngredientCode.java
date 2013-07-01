@@ -2,13 +2,18 @@ package com.app.erp.model;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Size;
+
 public class IngredientCode implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2229087466330498258L;
+	@Size(min=1, max=10)
 	protected String code;
+	@Size(min=1, max=45)
 	protected String brand;
+	@Size(min=1, max=45)
 	protected String name;
 	protected String typeCode;
 	protected String type;

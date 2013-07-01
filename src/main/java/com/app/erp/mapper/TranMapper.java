@@ -1,6 +1,5 @@
 package com.app.erp.mapper;
 
-import java.sql.Date;
 import java.util.List;
 
 import com.app.erp.model.Tran;

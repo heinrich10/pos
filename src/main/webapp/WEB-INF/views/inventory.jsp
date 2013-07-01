@@ -166,6 +166,18 @@ $(document).ready(function(){
 		<article>	
 			<a href="hist">Refresh</a>
 			<h2>Order History</h2>
+			<sf:form method="get" modelAttribute="monthYear">
+				Month
+				<sf:select path="month">
+					<sf:options items="${month}"  />
+				</sf:select>
+				Year
+				<sf:select path="year">
+					<sf:options items="${year}"/>
+				</sf:select>
+				<input type="submit" value="Accept" />
+			</sf:form>
+			
 			<table>
 				<tr>
 					<th>Item Number</th>

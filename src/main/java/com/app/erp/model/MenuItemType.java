@@ -1,7 +1,17 @@
 package com.app.erp.model;
 
-public class MenuItemType {
+import java.io.Serializable;
+
+import javax.validation.constraints.Size;
+
+public class MenuItemType implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3623212453959297759L;
+	@Size(min=1, max=10)
 	private String code;
+	@Size(min=1, max=45)
     private String name;
     
     public String getCode(){

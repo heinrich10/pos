@@ -6,6 +6,7 @@ import com.app.erp.model.Inventory;
 import com.app.erp.model.InventoryActive;
 import com.app.erp.model.InventoryHist;
 import com.app.erp.model.InventoryPending;
+import com.app.erp.model.MonthYear;
 
 public interface InventoryMapper {
 	 
@@ -19,7 +20,7 @@ public interface InventoryMapper {
 	
 	List<InventoryPending> loadInventoryPendingList(long[] itemNumber);
 	
-	List<InventoryHist> loadInventoryHist();
+	List<InventoryHist> loadInventoryHist(MonthYear monthYear);
 	
 	void saveInventoryPending(Inventory inventory);
 	    

@@ -6,6 +6,7 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/edit.css"/>"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add Order</title>
 </head>
@@ -44,6 +45,7 @@
 			        </td>
 			    </tr>
 			</table>
+			<sf:errors path="*" cssClass="error"/>
 		</sf:form>
 	</c:when>
 	
@@ -51,98 +53,27 @@
 	
 	<c:when test="${editType == 'unit'}">
 		<sf:form method="post" commandName="unitAndPostUnit" >
-			<c:choose>
-				<c:when test="${unitAndPostUnit.codeUnit != null}">
-					<table>
-						<tr>
-					        <td>Unit Code:</td>
-					        <td>${unitAndPostUnit.codeUnit}</td>
-					    </tr>
-					    <tr>
-					        <td>Name:</td>
-					        <td><sf:input path="name" /></td>
-					    </tr>
-					    <tr>
-					        <td>Post Unit:</td>
-					        <td>
-					        	<sf:select path="codePostUnit" >
-					        		<sf:option value="" label="-- none --"/>
-					        		<sf:options items="${unit}" itemLabel="name" itemValue="codeUnit"/>
-					        	</sf:select>
-					        </td>
-					    </tr>
-					    <tr>
-					        <td>Conversion Factor:</td>
-					        <td><sf:input path="conversionFactor" /></td>
-					    </tr>
-					    <tr>
-					        <td colspan="3">
-					            <input type="submit" value="Accept" />
-					        </td>
-					    </tr>
-					</table>
-				</c:when>
-				
-				<c:otherwise>
-					<table>
-						<tr>
-					        <td>Unit Code:</td>
-					        <td><sf:input path="codeUnit" /></td>
-					    </tr>
-					    <tr>
-					        <td>Name:</td>
-					        <td><sf:input path="name" /></td>
-					    </tr>
-					    <tr>
-					        <td>Post Unit:</td>
-					        <td>
-					        	<sf:select path="codePostUnit" >
-					        		<sf:option value="" label="-- none --"/>
-					        		<sf:options items="${unit}" itemLabel="name" itemValue="codeUnit"/>
-					        	</sf:select>
-					        </td>
-					    </tr>
-					    <tr>
-					        <td>Conversion Factor:</td>
-					        <td><sf:input path="conversionFactor" /></td>
-					    </tr>
-					    <tr>
-					        <td colspan="3">
-					            <input type="submit" value="Accept" />
-					        </td>
-					    </tr>
-					</table>
-				</c:otherwise>
-			</c:choose>
-		</sf:form>
-	</c:when>
-	
-	<c:when test="${editType == 'menuItem'}">
-		<sf:form method="post" commandName="menuItem" >
 			<table>
 				<tr>
-			        <td>Recipe Code:</td>
-			        <td>${menuItem.code}</td>
-			    </tr>
-			    <tr>
-			        <td>Type:</td>
-			        <td>
-			        	<sf:select path="typeCode" >
-			        		<sf:options items="${menuItemType}" itemLabel="name" itemValue="code"/>
-			        	</sf:select>
-			        </td>
+			        <td>Unit Code:</td>
+			        <td><sf:input path="codeUnit" /></td>
 			    </tr>
 			    <tr>
 			        <td>Name:</td>
 			        <td><sf:input path="name" /></td>
 			    </tr>
 			    <tr>
-			        <td>Description:</td>
-			        <td><sf:input path="description" /></td>
+			        <td>Post Unit:</td>
+			        <td>
+			        	<sf:select path="codePostUnit" >
+			        		<sf:option value="" label="-- none --"/>
+			        		<sf:options items="${unit}" itemLabel="name" itemValue="codeUnit"/>
+			        	</sf:select>
+			        </td>
 			    </tr>
 			    <tr>
-			        <td>Price:</td>
-			        <td><sf:input path="price" /></td>
+			        <td>Conversion Factor:</td>
+			        <td><sf:input path="conversionFactor" /></td>
 			    </tr>
 			    <tr>
 			        <td colspan="3">
@@ -150,27 +81,18 @@
 			        </td>
 			    </tr>
 			</table>
+			<sf:errors path="*" cssClass="error"/>
 		</sf:form>
 	</c:when>
 	
 	<c:when test="${editType == 'miType'}">
 		<sf:form method="post" commandName="menuItemType" >
 			<table>
-				<c:choose>
-					<c:when test="${menuItemType.code == null}">
-						<tr>
-			        		<td>Code:</td>
-			        		<td><sf:input path="code" /></td>
-			    		</tr>
-					</c:when>
-					<c:otherwise>
-						<tr>
-			        		<td>Code:</td>
-			        		<td>${menuItemType.code}</td>
-			    		</tr>
-					</c:otherwise>
-				</c:choose>
-			    <tr>
+				<tr>
+					<td>Code:</td>
+			       		<td><sf:input path="code" /></td>
+			    </tr>
+				<tr>
 			        <td>Name:</td>
 			        <td><sf:input path="name" /></td>
 			    </tr>
@@ -180,6 +102,7 @@
 			        </td>
 			    </tr>
 			</table>
+			<sf:errors path="*" cssClass="error"/>
 		</sf:form>
 	</c:when>
 	
@@ -211,6 +134,7 @@
 			        </td>
 			    </tr>
 			</table>
+			<sf:errors path="*" cssClass="error"></sf:errors>
 		</sf:form>
 	</c:when>
 	
@@ -231,6 +155,7 @@
 			        </td>
 			    </tr>
 			</table>
+			<sf:errors path="*" cssClass="error"></sf:errors>
 		</sf:form>
 	</c:when>
 	
@@ -259,6 +184,7 @@
 			        </td>
 			    </tr>
 			</table>
+			<sf:errors path="*" cssClass="error"></sf:errors>
 		</sf:form>
 	</c:when>
 	

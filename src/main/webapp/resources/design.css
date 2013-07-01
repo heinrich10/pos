@@ -114,6 +114,10 @@ article h2 {
 	color: #969696;
 }
 
+article h5 {
+	color: #FF0000;
+}
+
 article h6 {
 	float:right;
 	text-align: right;
@@ -176,6 +180,12 @@ table tr:hover td {
 	background-color: #A88568;
 	color: #FFF;
 }
+
+.error {
+	color: #FF0000;
+}
+
+
 
 /* Drop-Down Navigation */
 

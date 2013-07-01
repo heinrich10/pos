@@ -14,11 +14,15 @@ public interface IngredientMapper {
     
     void saveIngredientCode(IngredientCode ingredientCode);
     
+    int allowDeletionOfIngredient(String codeIngredient);
+    
     void deleteIngredientCode(String[] code);
     
     List<IngredientType> loadIngredientType();
     
     void saveIngredientType(IngredientType ingredientType);
+    
+    int allowDeletionOfIngredientType(String code);
     
     void deleteIngredientType(String[] code);
     

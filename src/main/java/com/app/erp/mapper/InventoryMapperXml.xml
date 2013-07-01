@@ -96,7 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         IIP.item_number
     </select>
     
-    <select id="loadInventoryHist" resultType="InventoryHist">
+    <select id="loadInventoryHist" resultType="InventoryHist" parameterType="MonthYear">
     	select
     	item_number as itemNumber,
         name,
@@ -107,7 +107,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         order_date as orderDate,
         timestamp as deliveryDate
         from
-        im_ingredient_pending_hist 
+        im_ingredient_pending_hist
+        <where>
+        	<if test="month > 0">
+        		month(create_date) = #{month}
+        	</if>
+        	<if test="year > 0">
+        		and year(create_date) = #{year}
+        	</if>
+        </where> 
         order by
         item_number
     </select>
